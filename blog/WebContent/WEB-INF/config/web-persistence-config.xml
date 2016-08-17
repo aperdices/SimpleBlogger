@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 	
+	(c) 2016 Antonio Perdices.
+	License: Public Domain.
+	You can use this code freely and wisely in your applications.
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
+
+	<!--
+		Instructs Spring to perform declarative transaction management on annotated classes.
+	-->	
+	<tx:annotation-driven />
+	
+	<!--
+		Drives transactions using local JPA APIs
+	-->
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+
+	<!--
+		Creates a EntityManagerFactory for use with the EclipseLink JPA provider.
+	-->
+	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		
+		<property name="dataSource" ref="dataSource" />
+		
+		<!--
+			If necessary, we can move default persistence.xml from /META-INF/ to another location
+			e.g. /WEB-INF/config/
+		 -->
+		<property name="persistenceXmlLocation" value="/WEB-INF/config/persistence.xml" /> 
+		
+		<property name="jpaVendorAdapter">
+
+			<!--
+				Declare the Eclipse JPA Vendor Adapter and configure its database dialect
+			-->
+			<bean class="org.springframework.orm.jpa.vendor.EclipseLinkJpaVendorAdapter">
+				<property name="databasePlatform" value="org.eclipse.persistence.platform.database.MySQLPlatform" />				
+   				<property name="showSql" value="true" />
+			</bean>
+
+		</property>
+		
+		<property name="jpaPropertyMap">
+			<map>
+				<!-- 
+					Weaving is a technique of manipulating the byte-code of compiled Java classes.
+					EclipseLink uses weaving to enhance both JPA entities and Plain Old Java Object (POJO)
+					classes for such things as lazy loading, change tracking, fetch groups,
+					and internal optimizations.
+				-->
+				<entry key="eclipselink.weaving" value="static"/>
+				<entry key="eclipselink.target-database" value="MySQL"/>
+				<!--
+					Custom EclipseLink SessionLog to support Log4j.
+					Log4j "eclipselink" appender must be configured correctly to work properly.
+				-->
+				<entry key="eclipselink.logging.logger" value="es.isendev.blog.util.Log4jSessionLog"/>
+		    </map>
+		</property>
+	
+	</bean>
+	
+	<!-- 
+		BeanPostProcessor that processes PersistenceUnit and PersistenceContext annotations, for injection
+		of the corresponding JPA resources EntityManagerFactory and EntityManager. Any such annotated fields
+		or methods in any Spring-managed object will automatically be injected. 
+	 -->
+	<bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+
+	<!--
+		Deploy a in-memory MySQL configured datasource.
+		It uses a high perfomance C3P0 Connection Pool.
+		IMPORTANT! It's necessary to include C3P0 and MySQL JDBC libraries to the classpath.
+	-->	
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+
+		<!-- Database driver class -->
+		<property name="driverClass" value="com.mysql.jdbc.Driver" />
+		
+		<!-- DEV database -->
+		<property name="jdbcUrl" value="jdbc:mysql://127.0.0.1:3306/pblog" />
+
+		<!-- PROD database -->
+		<!-- <property name="jdbcUrl" value="jdbc:mysql://192.168.100.2:3306/pblog" /> -->
+
+		<!-- Credentials -->
+		<property name="user" value="blog" />
+		<property name="password" value="blog" />
+		
+		<!-- C3P0 parameters -->		
+		<property name="initialPoolSize" value="1" />
+		<property name="maxPoolSize" value="10" />
+		<property name="minPoolSize" value="1" />
+		<property name="acquireIncrement" value="1" />
+		<property name="acquireRetryAttempts" value="0" />
+		
+	</bean>
+
+	<!--
+		Deploy a in-memory MySQL configured datasource using the Tomcat's integrated connection pool (DBCP).
+		IMPORTANT! It's necessary to copy the MySQL JDBC library (.jar) to Tomcat's library folder ($CATALINA_HOME/lib).
+	-->
+	<!-- <bean id="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close"> -->
+
+		<!-- Database driver class name -->
+		<!-- <property name="driverClassName" value="com.mysql.jdbc.Driver" />		 -->
+		
+		<!-- DEV database -->
+		<!-- <property name="url" value="jdbc:mysql://127.0.0.1:3306/dblog" /> -->
+
+		<!-- PROD database -->
+		<!-- <property name="url" value="jdbc:mysql://127.0.0.1:3306/pblog" /> --> 
+
+		<!-- Credentials -->
+		<!-- <property name="username" value="xxxx" /> -->
+		<!-- <property name="password" value="xxxx" /> -->
+		
+		<!-- TOMCAT pool parameters -->		
+		<!-- <property name="initialSize" value="0" /> -->
+		<!-- <property name="initSQL" value="SELECT * FROM USER" />		 -->
+		<!-- <property name="minIdle" value="10" /> -->
+		<!-- <property name="maxIdle" value="100" /> -->
+		<!-- <property name="maxActive" value="100" /> -->
+		<!-- <property name="maxWait" value="6000" /> -->
+		<!-- <property name="jmxEnabled" value="true" /> -->
+		<!-- <property name="jdbcInterceptors" value="org.apache.tomcat.jdbc.pool.interceptor.ConnectionState;org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer" /> -->
+		<!-- <property name="removeAbandoned" value="true" /> -->
+		<!-- <property name="removeAbandonedTimeout" value="60" /> -->
+		<!-- <property name="logAbandoned" value="true" /> -->
+		<!-- <property name="testOnBorrow" value="true" /> -->
+		<!-- <property name="testOnReturn" value="false" /> -->
+		<!-- <property name="testWhileIdle" value="false" /> -->
+		<!-- <property name="useEquals" value="false" /> -->
+		<!-- <property name="fairQueue" value="false" /> -->
+		<!-- <property name="timeBetweenEvictionRunsMillis" value="30000" /> -->
+		<!-- <property name="minEvictableIdleTimeMillis" value="30000" /> -->
+		<!-- <property name="validationInterval" value="1800000" /> -->
+		<!-- <property name="validationQuery" value="SELECT * FROM USER" /> -->
+	<!-- </bean> -->
+
+</beans>

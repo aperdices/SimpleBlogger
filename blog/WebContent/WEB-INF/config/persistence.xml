@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 	
+	(c) 2016 Antonio Perdices.
+	License: Public Domain.
+	You can use this code freely and wisely in your applications.
+-->
+
+<persistence version="1.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
+	<persistence-unit name="blog">
+		<class>es.isendev.blog.dao.beans.Entry</class>
+		<class>es.isendev.blog.dao.beans.Role</class>
+		<class>es.isendev.blog.dao.beans.Tag</class>
+		<class>es.isendev.blog.dao.beans.User</class>
+		<class>es.isendev.blog.dao.beans.Page</class>
+	</persistence-unit>
+</persistence>

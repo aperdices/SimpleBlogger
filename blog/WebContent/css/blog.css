@@ -1,0 +1,137 @@
+/* 	
+	(c) 2016 Antonio Perdices.
+	License: Public Domain.
+	You can use this code freely and wisely in your applications.
+*/
+
+/* START basic styles */
+body {
+	/* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+    padding-top: 80px;
+}
+
+footer {
+    margin: 25px 0px;
+}
+
+.textarea_bigger {
+  min-height: 300px;
+}
+
+.vertical-spacing-wrapper {
+    margin: 25px 0px;
+}
+
+.twitter_color {
+	color: #00ACED;
+}
+
+.instagram_color {
+	color: #DB3380;
+}
+
+.rss_color {
+	color: orange;
+}
+
+/* END basic styles */
+
+/* START Customizing Menubar */
+/* Original customization by  http://work.smarchal.com/twbscolor */
+.navbar-default {  
+	
+	/* Modified by APG */
+	/* background-color: transparent; */
+    /* background-image: url("../imgs/navbar.jpg"); */
+    /* background-repeat: no-repeat; */
+    /* background-position: center center; */
+    /* -webkit-background-size: cover; */
+    /* -moz-background-size: cover; */
+    /* background-size: cover; */
+    min-height: 60px;
+	background-color: #337AB7;
+	border-color: #337AB7;
+}
+.navbar-default .navbar-brand {
+
+	/* Modified by APG */
+	padding: 0 20px;
+	height: 60px;
+	line-height: 60px;
+	font-size: 20px;
+	font-weight: bold;
+	color: #ffffff;
+}
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+  color: #ffffff;
+}
+.navbar-default .navbar-text {
+  color: #ffffff;
+}
+.navbar-default .navbar-nav > li > a {
+
+	/* Modified by APG */
+	padding: 0 20px;
+	height: 60px;
+	line-height: 60px;
+	
+	color: #ffffff;
+}
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {	
+  	color: #ffffff;
+}
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+  color: #ffffff;
+  background-color: #AAAAAA;
+}
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .open > a:hover,
+.navbar-default .navbar-nav > .open > a:focus {
+  color: #ffffff;
+  background-color: #AAAAAA;
+}
+.navbar-default .navbar-toggle {
+
+	/* Modified by APG */
+  margin: 12px;  
+  border-color: #ffffff;
+}
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus {
+  background-color: #AAAAAA;
+}
+.navbar-default .navbar-toggle .icon-bar {
+  background-color: #ffffff;
+}
+.navbar-default .navbar-collapse,
+.navbar-default .navbar-form {
+  border-color: #ffffff;
+}
+.navbar-default .navbar-link {
+  color: #ffffff;
+}
+.navbar-default .navbar-link:hover {
+  color: #ffffff;
+}
+
+@media (max-width: 767px) {
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+    color: #ffffff;
+  }
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+    color: #ffffff;
+  }
+  .navbar-default .navbar-nav .open .dropdown-menu > .active > a,
+  .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover,
+  .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
+    color: #ffffff;
+    background-color: #337AB7;
+  }
+}
+
+/* END Customizing Menubar */

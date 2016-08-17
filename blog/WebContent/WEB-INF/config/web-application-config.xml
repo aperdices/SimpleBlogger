@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 	
+	(c) 2016 Antonio Perdices.
+	License: Public Domain.
+	You can use this code freely and wisely in your applications.
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+
+    <!--
+        Automatically register any bean that is annotated at the class level
+        with @Component, @Controller, @Service, @Repository, or @Aspect.
+    -->		
+	<context:component-scan base-package="es.isendev.blog" />
+	
+	<!-- Application Message Bundle -->
+	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basename" value="/WEB-INF/messages/messages" />
+		
+		<!-- 
+			Default is "-1", indicating to cache forever.
+			
+			A cacheSeconds value of "0" will check the last-modified timestamp
+			of the file on every message access. Do not use this in a production
+			environment!
+			
+			A positive number will cache loaded properties files for the given number
+			of seconds. This is essentially the interval between refresh checks. Note
+			that a refresh attempt will first check the last-modified timestamp of the
+			file before actually reloading it; so if files don't change, this interval
+			can be set rather low, as refresh attempts will not actually reload.
+		-->
+		<property name="cacheSeconds" value="1" />
+	</bean>
+	
+	<!-- Configures Spring MVC -->
+	<import resource="web-mvc-config.xml" />
+	
+	<!-- Configures Persistence Layer -->
+	<import resource="web-persistence-config.xml" />
+	
+	<!-- Configures Persistence Layer -->
+	<import resource="web-security-config.xml" />
+	
+	<!-- Configures SimpleBlogger Application -->
+	<import resource="simpleblogger-config.xml" />
+
+</beans>

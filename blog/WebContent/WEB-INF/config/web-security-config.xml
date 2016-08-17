@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 	
+	(c) 2016 Antonio Perdices.
+	License: Public Domain.
+	You can use this code freely and wisely in your applications.
+-->
+
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+  xmlns:beans="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+           http://www.springframework.org/schema/security
+           http://www.springframework.org/schema/security/spring-security-4.0.xsd">
+
+	<!-- 
+		Specify URLs to be secured and basic configuration parameters.
+	 -->	
+	<http use-expressions="true">
+
+		<!--
+			Setting form-login parameters:
+			- login-page="/app/login" (go to "login" View, configured by an "mvc:view-controller" entry in web-mvc-config.xml).
+			- login-processing-url="/app/loginProcess" (default Spring Security login controller URL).
+			- default-target-url="/app/entries" (page to load after succesful login).
+			- authentication-failure-url="/app/login?login_error=1" (page to load after failer login).
+		-->
+		<form-login login-page="/app/login" login-processing-url="/app/loginProcess" default-target-url="/app/entries" authentication-failure-url="/app/login?login_error=1" />
+
+		<!--
+			Setting logout-url parameters:
+			- logout-url="/app/logout" (default Spring Security logout controller URL).
+			- logout-success-url="/app/entries" (page to load after succesful logout).
+		-->
+		<!-- <logout logout-url="/app/logout" logout-success-url="/app/entries" /> -->
+		<logout invalidate-session="true" delete-cookies="JSESSIONID" logout-url="/app/logout" logout-success-url="/app/entries"/>
+		
+		<intercept-url pattern="/app/entry/**/save" access="hasRole('ROLE_ADMIN')"/>
+		<intercept-url pattern="/app/entry/**/edit" access="hasRole('ROLE_ADMIN')"/>
+		<intercept-url pattern="/app/entry/**/delete" access="hasRole('ROLE_ADMIN')"/>
+		<intercept-url pattern="/app/entry/**/publish" access="hasRole('ROLE_ADMIN')"/>
+		<intercept-url pattern="/app/entry/**/unpublish" access="hasRole('ROLE_ADMIN')"/>
+		
+		<intercept-url pattern="/app/entries/unpublished" access="hasRole('ROLE_ADMIN')"/>
+		
+		<intercept-url pattern="/app/tag/list" access="hasRole('ROLE_ADMIN')"/>
+		<intercept-url pattern="/app/tag/all" access="hasRole('ROLE_ADMIN')"/>
+		<intercept-url pattern="/app/tag/save" access="hasRole('ROLE_ADMIN')"/>
+		<intercept-url pattern="/app/tag/delete" access="hasRole('ROLE_ADMIN')"/>
+		
+		<intercept-url pattern="/app/page/list" access="hasRole('ROLE_ADMIN')"/>
+		<intercept-url pattern="/app/page/**/save" access="hasRole('ROLE_ADMIN')"/>
+		<intercept-url pattern="/app/page/**/edit" access="hasRole('ROLE_ADMIN')"/>
+		<intercept-url pattern="/app/page/**/delete" access="hasRole('ROLE_ADMIN')"/>
+
+	</http>
+
+	<!-- 
+		Custom Authentication Provider.
+		Uses a modified UserDetails and UserDetailsService.
+	-->	
+	<beans:bean id="userDetailsService" class="es.isendev.blog.util.CustomUserDetailsService" />
+
+	<authentication-manager>
+		<authentication-provider user-service-ref="userDetailsService">
+			<password-encoder hash="sha" />
+		</authentication-provider>
+	</authentication-manager>
+
+</beans:beans>

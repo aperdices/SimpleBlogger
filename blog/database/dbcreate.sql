@@ -1,0 +1,142 @@
+-- (c) 2016 Antonio Perdices.
+-- License: Public Domain.
+-- You can use this code freely and wisely in your applications.
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
+
+
+-- -----------------------------------------------------
+-- Table `USER`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `USER` ;
+
+CREATE  TABLE IF NOT EXISTS `USER` (
+  `USERNAME` VARCHAR(32) NOT NULL ,
+  `PASSWORD` VARCHAR(64) NOT NULL ,
+  `NAME` VARCHAR(32) NULL ,
+  `LASTNAME` VARCHAR(64) NULL ,
+  `EMAIL` VARCHAR(64) NULL ,
+  `CREATION_DATE` DATETIME NOT NULL ,
+  `MODIFICATION_DATE` DATETIME NULL ,
+  `ENABLED` TINYINT(1) NOT NULL DEFAULT TRUE ,
+  PRIMARY KEY (`USERNAME`) );
+
+
+-- -----------------------------------------------------
+-- Table `ENTRY`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `ENTRY` ;
+
+CREATE  TABLE IF NOT EXISTS `ENTRY` (
+  `ENTRY_ID` INT NOT NULL AUTO_INCREMENT ,
+  `USERNAME` VARCHAR(32) NOT NULL ,
+  `TITLE` VARCHAR(256) NOT NULL ,
+  `DESCRIPTION` VARCHAR(1024) NULL ,
+  `BODY` TEXT NULL ,
+  `CREATION_DATE` DATETIME NOT NULL ,
+  `MODIFICATION_DATE` DATETIME NULL ,
+  `PUBLISHED` TINYINT(1) NOT NULL DEFAULT FALSE ,
+  PRIMARY KEY (`ENTRY_ID`) ,
+  INDEX `FK_REL_USER_ENTRY` (`USERNAME` ASC) ,
+  CONSTRAINT `FK_REL_USER_ENTRY`
+    FOREIGN KEY (`USERNAME` )
+    REFERENCES `USER` (`USERNAME` ));
+
+
+-- -----------------------------------------------------
+-- Table `TAG`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `TAG` ;
+
+CREATE  TABLE IF NOT EXISTS `TAG` (
+  `TAG_ID` INT NOT NULL AUTO_INCREMENT ,
+  `TAGNAME` VARCHAR(32) NOT NULL ,
+  `CREATION_DATE` DATETIME NOT NULL ,
+  `MODIFICATION_DATE` DATETIME NULL ,
+  PRIMARY KEY (`TAG_ID`) );
+
+
+-- -----------------------------------------------------
+-- Table `REL_ENTRY_TAG`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `REL_ENTRY_TAG` ;
+
+CREATE  TABLE IF NOT EXISTS `REL_ENTRY_TAG` (
+  `ENTRY_ID` INT NOT NULL ,
+  `TAG_ID` INT NOT NULL ,
+  PRIMARY KEY (`ENTRY_ID`, `TAG_ID`) ,
+  INDEX `FK_REL_ENTRY_TAG2` (`TAG_ID` ASC) ,
+  INDEX `FK_REL_ENTRY_TAG` (`ENTRY_ID` ASC) ,
+  CONSTRAINT `FK_REL_ENTRY_TAG`
+    FOREIGN KEY (`ENTRY_ID` )
+    REFERENCES `ENTRY` (`ENTRY_ID` )
+    ON DELETE restrict
+    ON UPDATE restrict,
+  CONSTRAINT `FK_REL_ENTRY_TAG2`
+    FOREIGN KEY (`TAG_ID` )
+    REFERENCES `TAG` (`TAG_ID` )
+    ON DELETE restrict
+    ON UPDATE restrict);
+
+
+-- -----------------------------------------------------
+-- Table `ROLE`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `ROLE` ;
+
+CREATE  TABLE IF NOT EXISTS `ROLE` (
+  `ROLE` VARCHAR(64) NOT NULL ,
+  `DESCRIPTION` VARCHAR(128) NULL ,
+  `CREATION_DATE` DATETIME NOT NULL ,
+  `MODIFICATION_DATE` DATETIME NULL ,
+  PRIMARY KEY (`ROLE`) );
+
+
+-- -----------------------------------------------------
+-- Table `REL_USER_ROLE`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `REL_USER_ROLE` ;
+
+CREATE  TABLE IF NOT EXISTS `REL_USER_ROLE` (
+  `ROLE` VARCHAR(64) NOT NULL ,
+  `USERNAME` VARCHAR(32) NOT NULL ,
+  PRIMARY KEY (`ROLE`, `USERNAME`) ,
+  INDEX `FK_REL_USER_ROLE2` (`USERNAME` ASC) ,
+  INDEX `FK_REL_USER_ROLE` (`ROLE` ASC) ,
+  CONSTRAINT `FK_REL_USER_ROLE`
+    FOREIGN KEY (`ROLE` )
+    REFERENCES `ROLE` (`ROLE` )
+    ON DELETE restrict
+    ON UPDATE restrict,
+  CONSTRAINT `FK_REL_USER_ROLE2`
+    FOREIGN KEY (`USERNAME` )
+    REFERENCES `USER` (`USERNAME` )
+    ON DELETE restrict
+    ON UPDATE restrict);
+
+
+-- -----------------------------------------------------
+-- Table `PAGE`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `PAGE` ;
+
+CREATE  TABLE IF NOT EXISTS `PAGE` (
+  `PAGE_ID` INT NOT NULL AUTO_INCREMENT ,
+  `USERNAME` VARCHAR(32) NOT NULL ,
+  `TITLE` VARCHAR(256) NOT NULL ,
+  `BODY` TEXT NULL ,
+  `CREATION_DATE` DATETIME NOT NULL ,
+  `MODIFICATION_DATE` DATETIME NULL ,
+  `MENU_ORDER` INT NOT NULL DEFAULT 0 ,
+  `MENU_TITLE` VARCHAR(128) NOT NULL ,
+  PRIMARY KEY (`PAGE_ID`) ,
+  INDEX `FK_REL_USER_PAGE` (`USERNAME` ASC) ,
+  CONSTRAINT `FK_REL_USER_PAGE`
+    FOREIGN KEY (`USERNAME` )
+    REFERENCES `USER` (`USERNAME` ));
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
