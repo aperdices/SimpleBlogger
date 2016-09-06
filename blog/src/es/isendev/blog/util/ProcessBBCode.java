@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.Random;
 import java.util.Set;
 import java.util.Stack;
 import java.util.regex.Matcher;
@@ -60,21 +61,12 @@ public class ProcessBBCode implements Serializable {
     // Returns HTML-formatted string.
     private String process(String string) {
     	
-    	// Replace all types of carriage returns with paragraphs.
-    	String[] paragraphs = string.split("(\r\n|\n\r|\n|\r)");
-    	string = "";
-    	for (String p : paragraphs) {
-    		if (p != null && p != "") {
-    			p = p.trim();
-    			if (p.length() > 0) {
-    				string += "<p>" + p + "</p>";
-    			}
-    		}
-		}
-
         // Process [code]<text>[/code] tags.
     	StringBuffer buffer = new StringBuffer(string);
-        processCode(buffer);
+        
+    	processCode(buffer);
+        
+        processCarousel(buffer);
 
         // Process [quote]<text>[quote] and [quote="<quotetitle>"]<text>[quote] tags.
         processNestedTags(buffer,
@@ -100,8 +92,8 @@ public class ProcessBBCode implements Serializable {
             true);
         
         // Next transformations can be done with a String.
-        String str = buffer.toString();
-
+        String str = processCarriages(buffer);
+        
         // [color="<colorname>"]<text>[/color] Tag processing.
         str = str.replaceAll("\\[color=['\"]?(.*?[^'\"])['\"]?\\](.*?)\\[/color\\]", "<span style='color:$1'>$2</span>");
 
@@ -134,6 +126,22 @@ public class ProcessBBCode implements Serializable {
         
         return str;
     }
+    
+    // Replace all types of carriage returns with paragraphs.
+    private static String processCarriages (StringBuffer buffer) {
+    	String string = buffer.toString();		
+		String[] paragraphs = string.split("(\r\n|\n\r|\n|\r)");
+		string = "";
+		for (String p : paragraphs) {
+			if (p != null && p != "") {
+				p = p.trim();
+				if (p.length() > 0) {
+					string += "<p>" + p + "</p>";
+				}
+			}
+		}
+		return string;
+    }
 
     // [code] Tag processing function.
     private static void processCode(StringBuffer buffer) {
@@ -156,12 +164,85 @@ public class ProcessBBCode implements Serializable {
             String content = buffer.substring(start + "[code]".length(), end - "[/code]".length());
             content = escapeBBcode(content);
 
-            // Get all HTML carriage return occurrence
-            // and replace them with simple carriage return character.
-            content = content.replaceAll("<br>", "\n");
+            // Get all return carriage occurrences and replace them by HTML return.
+            content = content.replaceAll("(\r\n|\n\r|\n|\r)", "<br>");
             
             // Put content inside a styled preformatted HTML tag <pre>
             String replacement = "<div class=\"vertical-spacing-wrapper\"><pre class=\"pre-scrollable\">" + content + "</pre></div>";            
+            
+            buffer.replace(start, end, replacement);
+
+            end = start + replacement.length();
+        }
+    }
+    
+    // [carousel] Tag processing function.
+    private static void processCarousel(StringBuffer buffer) {
+    	
+        int start = buffer.indexOf("[carousel]");
+        int end;
+        
+        for (; (start >= 0) && (start < buffer.length()); start = buffer.indexOf("[carousel]", end)) {
+
+            end = buffer.indexOf("[/carousel]", start);
+
+            if (end < 0) {
+                break;
+            }
+
+            end += "[/carousel]".length();
+
+            String carouselId = "carousel-" + new Random().nextInt();
+
+            // Get content between [carousel][/carousel] tags
+            String content = buffer.substring(start + "[carousel]".length(), end - "[/carousel]".length());
+            String[] imageUrls = content.trim().split("\\[\\*\\]");
+            
+            String replacement = "<div class=\"vertical-spacing-wrapper\"><div id=\"" + carouselId + "\" class=\"carousel slide\" data-ride=\"carousel\">";
+            
+            replacement += "<ol class=\"carousel-indicators\">";            
+            int index = 0;
+            boolean firstIteration = true;
+            for (String url : imageUrls) {
+            	if (!url.trim().isEmpty()) {
+	            	if (firstIteration) {
+	            		replacement += "<li data-target=\"#" + carouselId + "\" data-slide-to=\"" + index + "\" class=\"active\"></li>";
+	            		firstIteration = false;
+	            	} else {
+	            		replacement += "<li data-target=\"#" + carouselId + "\" data-slide-to=\"" + index + "\"></li>";
+	            	}
+            	}
+            	
+            	index++;
+			}
+            replacement += "</ol>";
+            
+            replacement += "<div class=\"carousel-inner\" role=\"listbox\">";
+            firstIteration = true;
+            for (String url : imageUrls) {
+            	if (!url.trim().isEmpty()) {
+	            	if (firstIteration) {
+	            		replacement += "<div class=\"item active\"><img src=\"" + url.trim().replaceAll("(\r\n|\n\r|\n|\r)", "") + "\" alt=\"\"><div class=\"carousel-caption\"></div></div>";
+	            		firstIteration = false;
+	            	} else {
+	            		replacement += "<div class=\"item\"><img src=\"" + url.trim().replaceAll("(\r\n|\n\r|\n|\r)", "") + "\" alt=\"\"><div class=\"carousel-caption\"></div></div>";
+	            	}
+            	}
+			}            
+            replacement += "</div>";
+
+            replacement += "<a class=\"left carousel-control\" href=\"#" + carouselId + "\" role=\"button\" data-slide=\"prev\">";
+            replacement += "<span class=\"glyphicon glyphicon-chevron-left\" aria-hidden=\"true\"></span>";
+            replacement += "<span class=\"sr-only\">Previous</span>";
+            replacement += "</a>";
+            
+            replacement += "<a class=\"right carousel-control\" href=\"#" + carouselId + "\" role=\"button\" data-slide=\"next\">";
+            replacement += "<span class=\"glyphicon glyphicon-chevron-right\" aria-hidden=\"true\"></span>";
+            replacement += "<span class=\"sr-only\">Next</span>";
+            replacement += "</a>";            
+            
+            replacement += "</div></div>";
+            
             
             buffer.replace(start, end, replacement);
 

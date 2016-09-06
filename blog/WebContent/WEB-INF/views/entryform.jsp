@@ -98,6 +98,7 @@
 								<a href="javascript:insertAtCursor('body', '[list=\'1\'][*]\n[*]\n[*][/list]')"><span class="label label-info"><fmt:message key="blog.form.editor.numberedlist"/></span></a>
 								<a href="javascript:insertAtCursor('body', '[img]http://[/img]')"><span class="label label-info"><fmt:message key="blog.form.editor.image"/></span></a>
 								<a href="javascript:insertAtCursor('body', '[img=\'http://\']title[/img]')"><span class="label label-info"><fmt:message key="blog.form.editor.titledimage"/></span></a>
+								<a href="javascript:insertAtCursor('body', '[carousel][*]\n[*]\n[*][/carousel]')"><span class="label label-info"><fmt:message key="blog.form.editor.carousel"/></span></a>
 								<a href="javascript:insertAtCursor('body', '[youtube]videoId[/youtube]')"><span class="label label-info"><fmt:message key="blog.form.editor.youtube"/></span></a>
 							</p>
 							<form:textarea class="form-control textarea_bigger" path="body"/>

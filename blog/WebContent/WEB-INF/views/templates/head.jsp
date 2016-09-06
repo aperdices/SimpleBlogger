@@ -47,7 +47,7 @@
 
     <!-- jQuery Date Format plugin -->
 	<script src="<c:url value='/js/jquery-dateFormat.min.js' />"></script>
-	
+
 	<script>
     	
 		// Facebook sharing.
@@ -197,11 +197,4 @@
 		
 	</script>
     
-	<%--
-	<script type="text/javascript" src="<c:url value="/js/calendar.js" />"></script>
-	<script type="text/javascript" src="<c:url value="/js/calendar-en.js" />"></script>
-	<script type="text/javascript" src="<c:url value="/js/calendar-setup.js" />"></script>
-	<script type="text/javascript" src="<c:url value="/js/tools.js" />"></script>
-	--%>
-	
 </head>
