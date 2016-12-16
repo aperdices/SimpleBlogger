@@ -135,3 +135,20 @@ footer {
 }
 
 /* END Customizing Menubar */
+
+/* START Bootstrap carousel fix */
+
+.carousel-inner > .item > img,
+.carousel-inner > .item > a > img {
+	max-height: 800px;
+	margin: 0 auto;
+}
+
+.carousel-inner {
+	margin: 0 auto;
+	background: -moz-linear-gradient(left, #aaaaaa 0%, #000000 10%, #000000 90%, #ffffff 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(left, #aaaaaa 0%,#000000 10%,#000000 90%,#ffffff 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to right, #aaaaaa 0%,#000000 10%,#000000 90%,#ffffff 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+}
+
+/* END Bootstrap carousel fix */
