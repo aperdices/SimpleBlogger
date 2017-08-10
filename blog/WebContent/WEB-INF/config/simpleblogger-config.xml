@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!-- 	
-	(c) 2016 Antonio Perdices.
+	(c) 2017 Antonio Perdices.
 	License: Public Domain.
 	You can use this code freely and wisely in your applications.
 -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
 
 	<bean id="simpleBloggerConfig" class="es.isendev.blog.util.SimpleBloggerConfig" >
 		<property name="blogTitle" value="isendev.com"/>
-		<property name="blogFootMessage" value="Designed and built by isendev / 2016 / SimpleBlogger Engine v.0.4.1"/>
+		<property name="blogFootMessage" value="Designed and built by isendev / 2017 / SimpleBlogger Engine v.0.4.2"/>
 		<!-- <property name="blogUrl" value="http://www.isendev.com"/> -->
 		<property name="blogUrl" value="http://localhost:8080"/>		
 		<property name="rssFeedDescription" value="isendev.com blog RSS feed"/>
