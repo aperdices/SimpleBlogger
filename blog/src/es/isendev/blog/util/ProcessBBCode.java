@@ -198,7 +198,7 @@ public class ProcessBBCode implements Serializable {
             String content = buffer.substring(start + "[carousel]".length(), end - "[/carousel]".length());
             String[] imageUrls = content.trim().split("\\[\\*\\]");
             
-            String replacement = "<div class=\"vertical-spacing-wrapper\"><div id=\"" + carouselId + "\" class=\"carousel slide\" data-ride=\"carousel\">";
+            String replacement = "<div class=\"vertical-spacing-wrapper\"><div id=\"" + carouselId + "\" class=\"carousel slide center-block\" data-ride=\"carousel\">";
             
             replacement += "<ol class=\"carousel-indicators\">";            
             int index = 0;

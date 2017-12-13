@@ -136,12 +136,44 @@ footer {
 
 /* END Customizing Menubar */
 
+/* START Bootstrap img-responsive fix */
+
+.img-responsive {
+	max-width: 700px;
+}
+
+@media (max-width: 800px) {
+	.img-responsive {
+		max-width: 100%;
+	}
+}
+
+/* END Bootstrap img-responsive fix */
+
 /* START Bootstrap carousel fix */
+
+.carousel {
+  max-width: 700px;
+}
 
 .carousel-inner > .item > img,
 .carousel-inner > .item > a > img {
-	max-height: 800px;
+ 	max-height: 700px;
+ 	max-width: 700px;
 	margin: 0 auto;
+}
+
+@media (max-width: 767px) {
+	.carousel {
+	  max-width: 500px;
+	}
+	
+	.carousel-inner > .item > img,
+	.carousel-inner > .item > a > img {
+	 	max-height: 500px;
+	 	max-width: 500px;
+		margin: 0 auto;
+	}
 }
 
 .carousel-inner {
