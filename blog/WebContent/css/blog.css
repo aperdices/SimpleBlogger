@@ -139,10 +139,10 @@ footer {
 /* START Bootstrap img-responsive fix */
 
 .img-responsive {
-	max-width: 700px;
+	max-width: 767px;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 767px) {
 	.img-responsive {
 		max-width: 100%;
 	}
@@ -153,27 +153,28 @@ footer {
 /* START Bootstrap carousel fix */
 
 .carousel {
-  max-width: 700px;
+  max-width: 767px;
 }
 
 .carousel-inner > .item > img,
 .carousel-inner > .item > a > img {
- 	max-height: 700px;
- 	max-width: 700px;
+ 	max-height: 767px;
+ 	max-width: 767px;
 	margin: 0 auto;
 }
 
 @media (max-width: 767px) {
 	.carousel {
-	  max-width: 500px;
+		max-width: 100%;
 	}
 	
 	.carousel-inner > .item > img,
 	.carousel-inner > .item > a > img {
-	 	max-height: 500px;
-	 	max-width: 500px;
+	 	max-height: 100%;
+	 	max-width: 100%;
 		margin: 0 auto;
 	}
+
 }
 
 .carousel-inner {

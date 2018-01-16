@@ -76,21 +76,6 @@
     <!-- /.container -->
 </nav>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <%--
 
 <div class="menu">
