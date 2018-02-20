@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!-- 	
-	(c) 2017 Antonio Perdices.
+	(c) 2018 Antonio Perdices.
 	License: Public Domain.
 	You can use this code freely and wisely in your applications.
 -->
@@ -87,7 +87,7 @@
 		<property name="driverClass" value="com.mysql.jdbc.Driver" />
 		
 		<!-- DEV database -->
-		<property name="jdbcUrl" value="jdbc:mysql://192.168.100.2:3306/dblog" />
+		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/dblog" />
 
 		<!-- PROD database -->
 		<!-- <property name="jdbcUrl" value="jdbc:mysql://192.168.100.2:3306/pblog" /> -->

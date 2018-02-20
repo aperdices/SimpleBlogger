@@ -1,4 +1,4 @@
-// (c) 2016 Antonio Perdices.
+// (c) 2018 Antonio Perdices.
 // License: Public Domain.
 // You can use this code freely and wisely in your applications.
 
@@ -6,15 +6,18 @@ package es.isendev.blog.dao.beans;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.ManyToOne;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -56,6 +59,10 @@ public class Page implements Serializable {
 	
 	@Column(name="MENU_TITLE")
 	private String menuTitle;
+	
+	@ManyToMany(targetEntity=es.isendev.blog.dao.beans.Resource.class)
+	@JoinTable(joinColumns = @JoinColumn(name="PAGE_ID", referencedColumnName = "PAGE_ID"),name = "REL_PAGE_RESOURCE", inverseJoinColumns = @JoinColumn(name="RESOURCE_ID", referencedColumnName = "RESOURCE_ID"))
+	private List<Resource> resources;	
 
 	public Page() {
 		super();
@@ -131,6 +138,14 @@ public class Page implements Serializable {
 
 	public void setMenuTitle(String menuTitle) {
 		this.menuTitle = menuTitle;
+	}
+	
+	public List<Resource> getResources() {
+		return resources;
+	}
+
+	public void setResources(List<Resource> resources) {
+		this.resources = resources;
 	}
 	
 }

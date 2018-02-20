@@ -9,15 +9,9 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Schema blog
+-- Table `USER`
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `blog` DEFAULT CHARACTER SET latin1 ;
-USE `blog` ;
-
--- -----------------------------------------------------
--- Table `blog`.`USER`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `blog`.`USER` (
+CREATE TABLE IF NOT EXISTS `USER` (
   `USERNAME` VARCHAR(32) NOT NULL,
   `PASSWORD` VARCHAR(64) NOT NULL,
   `NAME` VARCHAR(32) NULL,
@@ -30,9 +24,9 @@ CREATE TABLE IF NOT EXISTS `blog`.`USER` (
 
 
 -- -----------------------------------------------------
--- Table `blog`.`ENTRY`
+-- Table `ENTRY`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `blog`.`ENTRY` (
+CREATE TABLE IF NOT EXISTS `ENTRY` (
   `ENTRY_ID` INT NOT NULL AUTO_INCREMENT,
   `USERNAME` VARCHAR(32) NOT NULL,
   `TITLE` VARCHAR(256) NOT NULL,
@@ -42,16 +36,17 @@ CREATE TABLE IF NOT EXISTS `blog`.`ENTRY` (
   `MODIFICATION_DATE` DATETIME NULL,
   `PUBLISHED` TINYINT(1) NOT NULL DEFAULT FALSE,
   PRIMARY KEY (`ENTRY_ID`),
-  INDEX `FK_REL_USER_ENTRY_idx` (`USERNAME` ASC),
   CONSTRAINT `FK_REL_USER_ENTRY`
     FOREIGN KEY (`USERNAME`)
-    REFERENCES `blog`.`USER` (`USERNAME`));
+    REFERENCES `USER` (`USERNAME`));
+
+CREATE INDEX `FK_REL_USER_ENTRY_idx` ON `ENTRY` (`USERNAME` ASC);
 
 
 -- -----------------------------------------------------
--- Table `blog`.`TAG`
+-- Table `TAG`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `blog`.`TAG` (
+CREATE TABLE IF NOT EXISTS `TAG` (
   `TAG_ID` INT NOT NULL AUTO_INCREMENT,
   `TAGNAME` VARCHAR(32) NOT NULL,
   `CREATION_DATE` DATETIME NOT NULL,
@@ -60,30 +55,32 @@ CREATE TABLE IF NOT EXISTS `blog`.`TAG` (
 
 
 -- -----------------------------------------------------
--- Table `blog`.`REL_ENTRY_TAG`
+-- Table `REL_ENTRY_TAG`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `blog`.`REL_ENTRY_TAG` (
+CREATE TABLE IF NOT EXISTS `REL_ENTRY_TAG` (
   `ENTRY_ID` INT NOT NULL,
   `TAG_ID` INT NOT NULL,
   PRIMARY KEY (`ENTRY_ID`, `TAG_ID`),
-  INDEX `FK_REL_ENTRY_TAG2_idx` (`TAG_ID` ASC),
-  INDEX `FK_REL_ENTRY_TAG_idx` (`ENTRY_ID` ASC),
   CONSTRAINT `FK_REL_ENTRY_TAG`
     FOREIGN KEY (`ENTRY_ID`)
-    REFERENCES `blog`.`ENTRY` (`ENTRY_ID`)
+    REFERENCES `ENTRY` (`ENTRY_ID`)
     ON DELETE restrict
     ON UPDATE restrict,
   CONSTRAINT `FK_REL_ENTRY_TAG2`
     FOREIGN KEY (`TAG_ID`)
-    REFERENCES `blog`.`TAG` (`TAG_ID`)
+    REFERENCES `TAG` (`TAG_ID`)
     ON DELETE restrict
     ON UPDATE restrict);
 
+CREATE INDEX `FK_REL_ENTRY_TAG2_idx` ON `REL_ENTRY_TAG` (`TAG_ID` ASC);
+
+CREATE INDEX `FK_REL_ENTRY_TAG_idx` ON `REL_ENTRY_TAG` (`ENTRY_ID` ASC);
+
 
 -- -----------------------------------------------------
--- Table `blog`.`ROLE`
+-- Table `ROLE`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `blog`.`ROLE` (
+CREATE TABLE IF NOT EXISTS `ROLE` (
   `ROLE` VARCHAR(64) NOT NULL,
   `DESCRIPTION` VARCHAR(128) NULL,
   `CREATION_DATE` DATETIME NOT NULL,
@@ -92,30 +89,32 @@ CREATE TABLE IF NOT EXISTS `blog`.`ROLE` (
 
 
 -- -----------------------------------------------------
--- Table `blog`.`REL_USER_ROLE`
+-- Table `REL_USER_ROLE`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `blog`.`REL_USER_ROLE` (
+CREATE TABLE IF NOT EXISTS `REL_USER_ROLE` (
   `ROLE` VARCHAR(64) NOT NULL,
   `USERNAME` VARCHAR(32) NOT NULL,
   PRIMARY KEY (`ROLE`, `USERNAME`),
-  INDEX `FK_REL_USER_ROLE2_idx` (`USERNAME` ASC),
-  INDEX `FK_REL_USER_ROLE_idx` (`ROLE` ASC),
   CONSTRAINT `FK_REL_USER_ROLE`
     FOREIGN KEY (`ROLE`)
-    REFERENCES `blog`.`ROLE` (`ROLE`)
+    REFERENCES `ROLE` (`ROLE`)
     ON DELETE restrict
     ON UPDATE restrict,
   CONSTRAINT `FK_REL_USER_ROLE2`
     FOREIGN KEY (`USERNAME`)
-    REFERENCES `blog`.`USER` (`USERNAME`)
+    REFERENCES `USER` (`USERNAME`)
     ON DELETE restrict
     ON UPDATE restrict);
 
+CREATE INDEX `FK_REL_USER_ROLE2_idx` ON `REL_USER_ROLE` (`USERNAME` ASC);
+
+CREATE INDEX `FK_REL_USER_ROLE_idx` ON `REL_USER_ROLE` (`ROLE` ASC);
+
 
 -- -----------------------------------------------------
--- Table `blog`.`PAGE`
+-- Table `PAGE`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `blog`.`PAGE` (
+CREATE TABLE IF NOT EXISTS `PAGE` (
   `PAGE_ID` INT NOT NULL AUTO_INCREMENT,
   `USERNAME` VARCHAR(32) NOT NULL,
   `TITLE` VARCHAR(256) NOT NULL,
@@ -125,19 +124,20 @@ CREATE TABLE IF NOT EXISTS `blog`.`PAGE` (
   `MENU_ORDER` INT NOT NULL DEFAULT 0,
   `MENU_TITLE` VARCHAR(128) NOT NULL,
   PRIMARY KEY (`PAGE_ID`),
-  INDEX `FK_REL_USER_PAGE_idx` (`USERNAME` ASC),
   CONSTRAINT `FK_REL_USER_PAGE`
     FOREIGN KEY (`USERNAME`)
-    REFERENCES `blog`.`USER` (`USERNAME`)
+    REFERENCES `USER` (`USERNAME`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+CREATE INDEX `FK_REL_USER_PAGE_idx` ON `PAGE` (`USERNAME` ASC);
+
 
 -- -----------------------------------------------------
--- Table `blog`.`RESOURCE_TYPE`
+-- Table `RESOURCE_TYPE`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `blog`.`RESOURCE_TYPE` (
+CREATE TABLE IF NOT EXISTS `RESOURCE_TYPE` (
   `RESOURCE_TYPE_ID` VARCHAR(8) NOT NULL,
   `DESCRIPTION` VARCHAR(64) NOT NULL,
   `CREATION_DATE` DATETIME NOT NULL,
@@ -147,66 +147,71 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `blog`.`RESOURCE`
+-- Table `RESOURCE`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `blog`.`RESOURCE` (
+CREATE TABLE IF NOT EXISTS `RESOURCE` (
   `RESOURCE_ID` INT NOT NULL,
   `NAME` VARCHAR(64) NOT NULL,
   `CREATION_DATE` DATETIME NOT NULL,
   `MODIFICATION_DATE` DATETIME NULL,
   `RESOURCE_TYPE_ID` VARCHAR(8) NOT NULL,
-  `DATA` BLOB() NOT NULL,
+  `DATA` BLOB(2048) NOT NULL,
   PRIMARY KEY (`RESOURCE_ID`),
-  INDEX `fk_RESOURCE_RESOURCE_TYPE1_idx` (`RESOURCE_TYPE_ID` ASC),
   CONSTRAINT `FK_RESOURCE_RESOURCE_TYPE1`
     FOREIGN KEY (`RESOURCE_TYPE_ID`)
-    REFERENCES `blog`.`RESOURCE_TYPE` (`RESOURCE_TYPE_ID`)
+    REFERENCES `RESOURCE_TYPE` (`RESOURCE_TYPE_ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+CREATE INDEX `fk_RESOURCE_RESOURCE_TYPE1_idx` ON `RESOURCE` (`RESOURCE_TYPE_ID` ASC);
+
 
 -- -----------------------------------------------------
--- Table `blog`.`REL_ENTRY_RESOURCE`
+-- Table `REL_ENTRY_RESOURCE`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `blog`.`REL_ENTRY_RESOURCE` (
+CREATE TABLE IF NOT EXISTS `REL_ENTRY_RESOURCE` (
   `ENTRY_ID` INT NOT NULL,
   `RESOURCE_ID` INT NOT NULL,
   PRIMARY KEY (`ENTRY_ID`, `RESOURCE_ID`),
-  INDEX `fk_ENTRY_has_RESOURCE_RESOURCE1_idx` (`RESOURCE_ID` ASC),
-  INDEX `fk_ENTRY_has_RESOURCE_ENTRY1_idx` (`ENTRY_ID` ASC),
   CONSTRAINT `fk_ENTRY_has_RESOURCE_ENTRY1`
     FOREIGN KEY (`ENTRY_ID`)
-    REFERENCES `blog`.`ENTRY` (`ENTRY_ID`)
+    REFERENCES `ENTRY` (`ENTRY_ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_ENTRY_has_RESOURCE_RESOURCE1`
     FOREIGN KEY (`RESOURCE_ID`)
-    REFERENCES `blog`.`RESOURCE` (`RESOURCE_ID`)
+    REFERENCES `RESOURCE` (`RESOURCE_ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
+CREATE INDEX `fk_ENTRY_has_RESOURCE_RESOURCE1_idx` ON `REL_ENTRY_RESOURCE` (`RESOURCE_ID` ASC);
+
+CREATE INDEX `fk_ENTRY_has_RESOURCE_ENTRY1_idx` ON `REL_ENTRY_RESOURCE` (`ENTRY_ID` ASC);
+
 
 -- -----------------------------------------------------
--- Table `blog`.`REL_PAGE_RESOURCE`
+-- Table `REL_PAGE_RESOURCE`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `blog`.`REL_PAGE_RESOURCE` (
+CREATE TABLE IF NOT EXISTS `REL_PAGE_RESOURCE` (
   `PAGE_ID` INT NOT NULL,
   `RESOURCE_ID` INT NOT NULL,
   PRIMARY KEY (`PAGE_ID`, `RESOURCE_ID`),
-  INDEX `fk_PAGE_has_RESOURCE_RESOURCE1_idx` (`RESOURCE_ID` ASC),
-  INDEX `fk_PAGE_has_RESOURCE_PAGE1_idx` (`PAGE_ID` ASC),
   CONSTRAINT `fk_PAGE_has_RESOURCE_PAGE1`
     FOREIGN KEY (`PAGE_ID`)
-    REFERENCES `blog`.`PAGE` (`PAGE_ID`)
+    REFERENCES `PAGE` (`PAGE_ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_PAGE_has_RESOURCE_RESOURCE1`
     FOREIGN KEY (`RESOURCE_ID`)
-    REFERENCES `blog`.`RESOURCE` (`RESOURCE_ID`)
+    REFERENCES `RESOURCE` (`RESOURCE_ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+
+CREATE INDEX `fk_PAGE_has_RESOURCE_RESOURCE1_idx` ON `REL_PAGE_RESOURCE` (`RESOURCE_ID` ASC);
+
+CREATE INDEX `fk_PAGE_has_RESOURCE_PAGE1_idx` ON `REL_PAGE_RESOURCE` (`PAGE_ID` ASC);
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
