@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!-- 	
-	(c) 2017 Antonio Perdices.
+	(c) 2018 Antonio Perdices.
 	License: Public Domain.
 	You can use this code freely and wisely in your applications.
 -->
@@ -57,5 +57,10 @@
     <bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
 		<property name="defaultErrorView" value="error"/>
 	</bean>
+	
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		 <!-- Setting maximum upload size -->
+		<property name="maxUploadSize" value="100000" />
+	</bean>	
 
 </beans>
