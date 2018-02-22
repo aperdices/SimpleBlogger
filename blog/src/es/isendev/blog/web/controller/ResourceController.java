@@ -26,7 +26,6 @@ public class ResourceController {
 	@Autowired
 	private SimpleBloggerConfig simpleBloggerConfig;
 	
-	// Default method to get a RSS Feed
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
 	public ModelAndView resourceUpload() throws Exception {
 		

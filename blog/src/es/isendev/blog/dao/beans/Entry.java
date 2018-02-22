@@ -64,10 +64,6 @@ public class Entry implements Serializable {
 	@Column(name="PUBLISHED")
 	private boolean published;
 	
-	@ManyToMany(targetEntity=es.isendev.blog.dao.beans.Resource.class)
-	@JoinTable(joinColumns = @JoinColumn(name="ENTRY_ID", referencedColumnName = "ENTRY_ID"),name = "REL_ENTRY_RESOURCE", inverseJoinColumns = @JoinColumn(name="RESOURCE_ID", referencedColumnName = "RESOURCE_ID"))
-	private List<Resource> resources;	
-
 	public Entry() {
 		super();
 	}
@@ -150,14 +146,6 @@ public class Entry implements Serializable {
 
 	public boolean isPublished() {
 		return published;
-	}
-
-	public List<Resource> getResources() {
-		return resources;
-	}
-
-	public void setResources(List<Resource> resources) {
-		this.resources = resources;
 	}
 
 }

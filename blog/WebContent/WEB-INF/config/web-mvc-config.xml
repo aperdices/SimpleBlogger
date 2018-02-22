@@ -18,6 +18,7 @@
 	<!-- Creates simple view controllers -->
 	<mvc:view-controller path="/login" view-name="loginform" />
 	<mvc:view-controller path="/tag/list" view-name="taglist" />
+	<mvc:view-controller path="/folder/list" view-name="folderlist" />
 	
 	<!-- Create RSS View -->
 	<bean id="rssNewsFeedView" class="es.isendev.blog.view.RssNewsFeedView" />

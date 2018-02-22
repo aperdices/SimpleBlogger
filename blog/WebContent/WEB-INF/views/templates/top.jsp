@@ -1,5 +1,5 @@
 <%-- 	
-	(c) 2016 Antonio Perdices.
+	(c) 2018 Antonio Perdices.
 	License: Public Domain.
 	You can use this code freely and wisely in your applications.
 --%>
@@ -57,6 +57,7 @@
 							<li><a href="<c:url value="/app/entry/0/edit"/>"><fmt:message key="blog.menu.newentry"/></a></li>
 							<li><a href="<c:url value="/app/page/list"/>"><fmt:message key="blog.menu.editpages"/></a></li>
 							<li><a href="<c:url value="/app/tag/list"/>"><fmt:message key="blog.menu.edittags"/></a></li>
+							<li><a href="<c:url value="/app/folder/list"/>"><fmt:message key="blog.menu.editfolders"/></a></li>
 							<li role="separator" class="divider"></li>
 							<li><a href="<c:url value="/app/entries/unpublished"/>"><fmt:message key="blog.menu.unpublished"/></a></li>			
 						</ul>

@@ -49,6 +49,11 @@
 		<intercept-url pattern="/app/tag/save" access="hasRole('ROLE_ADMIN')"/>
 		<intercept-url pattern="/app/tag/delete" access="hasRole('ROLE_ADMIN')"/>
 		
+		<intercept-url pattern="/app/folder/list" access="hasRole('ROLE_ADMIN')"/>
+		<intercept-url pattern="/app/folder/all" access="hasRole('ROLE_ADMIN')"/>
+		<intercept-url pattern="/app/folder/save" access="hasRole('ROLE_ADMIN')"/>
+		<intercept-url pattern="/app/folder/delete" access="hasRole('ROLE_ADMIN')"/>
+		
 		<intercept-url pattern="/app/page/list" access="hasRole('ROLE_ADMIN')"/>
 		<intercept-url pattern="/app/page/**/save" access="hasRole('ROLE_ADMIN')"/>
 		<intercept-url pattern="/app/page/**/edit" access="hasRole('ROLE_ADMIN')"/>

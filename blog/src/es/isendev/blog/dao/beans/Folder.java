@@ -9,18 +9,14 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-public class Resource implements Serializable {
+public class Folder implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="RESOURCE_ID")
-	private int resourceId;
-	
-	@ManyToOne(targetEntity=es.isendev.blog.dao.beans.User.class, optional = false)
-	@JoinColumn(name="USERNAME", referencedColumnName = "USERNAME")
-	private User user;	
+	@Column(name="FOLDER_ID")
+	private int folderId;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="CREATION_DATE")
@@ -32,27 +28,19 @@ public class Resource implements Serializable {
 
 	private String name;
 
-	@ManyToOne
-	@JoinColumn(name="RESOURCE_TYPE_ID")
-	private ResourceType resourceType;
-	
-	@ManyToOne
-	@JoinColumn(name="FOLDER_ID")
-	private Folder folder;	
-
-	public Resource() {
+	public Folder() {
 	}
 
-	public int getResourceId() {
-		return this.resourceId;
+	public int getFolderId() {
+		return folderId;
 	}
 
-	public void setResourceId(int resourceId) {
-		this.resourceId = resourceId;
+	public void setFolderId(int folderId) {
+		this.folderId = folderId;
 	}
 
 	public Date getCreationDate() {
-		return this.creationDate;
+		return creationDate;
 	}
 
 	public void setCreationDate(Date creationDate) {
@@ -60,7 +48,7 @@ public class Resource implements Serializable {
 	}
 
 	public Date getModificationDate() {
-		return this.modificationDate;
+		return modificationDate;
 	}
 
 	public void setModificationDate(Date modificationDate) {
@@ -68,19 +56,11 @@ public class Resource implements Serializable {
 	}
 
 	public String getName() {
-		return this.name;
+		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	public ResourceType getResourceType() {
-		return this.resourceType;
-	}
-
-	public void setResourceType(ResourceType resourceType) {
-		this.resourceType = resourceType;
-	}
-
+	
 }
