@@ -1,4 +1,4 @@
-// (c) 2016 Antonio Perdices.
+// (c) 2018 Antonio Perdices.
 // License: Public Domain.
 // You can use this code freely and wisely in your applications.
 
@@ -11,6 +11,7 @@ public class SimpleBloggerConfig {
 	
 	private String blogUrl;
 	private String rssFeedDescription;
+	private String resourcesPath;
 	
 	private int entriesPerPage;
 	
@@ -80,6 +81,14 @@ public class SimpleBloggerConfig {
 
 	public void setMyTwitterUrl(String myTwitterUrl) {
 		this.myTwitterUrl = myTwitterUrl;
+	}
+
+	public String getResourcesPath() {
+		return resourcesPath;
+	}
+
+	public void setResourcesPath(String resourcesPath) {
+		this.resourcesPath = resourcesPath;
 	}
 	
 }

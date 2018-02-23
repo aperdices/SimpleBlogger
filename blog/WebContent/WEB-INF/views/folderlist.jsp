@@ -84,10 +84,10 @@
 	
 	var save_folder = function () {
 		
-		var pattern = new RegExp("^[a-zA-Z0-9]+$");
+		var pattern = new RegExp("^[a-zA-Z0-9_ ]+$");
 		
 		if (!pattern.test($("#foldernameInputText").val())) {
-			alert ($("#foldernameInputText").val() + '<fmt:message key="blog.folders.add.notvalid"/>');
+			$('#modalerrormsg').show();
 		} else {
 			saveUrl = '<c:url value="/app/folder/save"/>';
 			saveParams = {
@@ -104,21 +104,22 @@
 		return;
 	};
 	
-// 	var delete_tag = function (tId) {
-// 		var ok = confirm('<fmt:message key="blog.tags.delete.confirm"/>');
-// 		if (ok) {
-// 			deleteUrl = '<c:url value="/app/tag/delete"/>',
-// 			deleteParams = {
-// 			    tagId: tId
-// 		  	};
-// 			$.getJSON(deleteUrl, deleteParams, function(data) {
-// 				console.log("JSON data query success.");
-// 				loadRemoteData();
-// 			});
-// 		}
-// 	};
+	var delete_folder = function (fId) {
+		var ok = confirm('<fmt:message key="blog.folders.delete.confirm"/>');
+		if (ok) {
+			deleteUrl = '<c:url value="/app/folder/delete"/>',
+			deleteParams = {
+			    folderId: fId
+		  	};
+			$.getJSON(deleteUrl, deleteParams, function(data) {
+				console.log("JSON data query success.");
+				loadRemoteData();
+			});
+		}
+	};
 
 	$(document).ready(function() {
+		$('#modalerrormsg').hide();
 		loadRemoteData();
 	});
 	
@@ -176,6 +177,7 @@
 			      	<div class="modal-body">
 				        <form>
 							<div class="form-group">
+								<h4 id="modalerrormsg"><span class="label label-danger"><fmt:message key="blog.folders.add.notvalid"/></span></h4>
 								<input type="hidden" class="form-control" id="folderIdInputHidden">
 								<label><fmt:message key="blog.folders.label.foldername"/></label>
 								<input type="text" class="form-control" id="foldernameInputText">

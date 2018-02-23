@@ -1,5 +1,5 @@
 <%-- 	
-	(c) 2016 Antonio Perdices.
+	(c) 2018 Antonio Perdices.
 	License: Public Domain.
 	You can use this code freely and wisely in your applications.
 --%>
@@ -87,7 +87,7 @@
 		var pattern = new RegExp("^[a-zA-Z0-9]+$");
 		
 		if (!pattern.test($("#tagnameInputText").val())) {
-			alert ($("#tagnameInputText").val() + '<fmt:message key="blog.tags.add.notvalid"/>');
+			$('#modalerrormsg').show();
 		} else {
 			saveUrl = '<c:url value="/app/tag/save"/>';
 			saveParams = {
@@ -119,6 +119,7 @@
 	};
 
 	$(document).ready(function() {
+		$('#modalerrormsg').hide();
 		loadRemoteData();
 	});
 	
@@ -176,6 +177,7 @@
 			      	<div class="modal-body">
 				        <form>
 							<div class="form-group">
+								<h4 id="modalerrormsg"><span class="label label-danger"><fmt:message key="blog.tags.add.notvalid"/></span></h4>
 								<input type="hidden" class="form-control" id="tagIdInputHidden">
 								<label><fmt:message key="blog.tags.label.tagname"/></label>
 								<input type="text" class="form-control" id="tagnameInputText">

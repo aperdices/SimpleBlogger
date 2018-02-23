@@ -4,18 +4,17 @@
 
 package es.isendev.blog.web.controller;
 
-// import org.springframework.ui.ModelMap;
-
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -56,7 +55,7 @@ public class FolderController {
 				folder.setName(foldername);
 				folder.setModificationDate(new Date());
 			} else {				
-				// We can not find the requested tag to be edited...
+				// We can not find the requested folder to be edited...
 				list.add("Save failed... Can not find Folder with folderId <" + foldername + ">.");
 				return list;
 			}
@@ -67,13 +66,38 @@ public class FolderController {
 			folder.setModificationDate(new Date());
 		}
 		
-		// TODO: Tag object field validation???
-		
 		folder = folderInterface.saveFolder(folder);
+		
+		// Check for folder directory in resources Path.
+		// If not exist, create it.
+		String folderPath = simpleBloggerConfig.getResourcesPath() + "/" + String.format("%08d", folder.getFolderId());
+		File folderDir = new File(folderPath);
+		if(!folderDir.exists()) {
+			folderDir.mkdir();
+		}
 		
 		list.add("Folder <" + folder.getName() + "> successfully saved.");
 		return list; 
     }	
+	
+	@RequestMapping(value = "/delete", method = RequestMethod.GET, params={"folderId"})
+	@ResponseBody
+	public List<Object> deleteFolder(@RequestParam("folderId") int folderId) throws Exception {
+
+		// TODO: Delete resources objects inside folder.
+		
+		// Delete folder object.
+		folderInterface.deleteFolder(folderId);
+
+		// Delete folder directory recursively.
+		String folderPath = simpleBloggerConfig.getResourcesPath() + "/" + String.format("%08d", folderId);
+		FileUtils.deleteDirectory(new File(folderPath));
+		
+		ArrayList<Object> list = new ArrayList<Object>();
+		list.add("Folder successfully deleted.");
+		return list;
+    }
+	
 	
 	
 }
