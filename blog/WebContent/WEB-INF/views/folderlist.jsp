@@ -67,8 +67,8 @@
 		row_str += '<td class="text-center">' + $.format.date(cdate, 'yyyy/MM/dd HH:mm:ss') + '</td>';
 		row_str += '<td class="text-center">' + $.format.date(mdate, 'yyyy/MM/dd HH:mm:ss') + '</td>';
 		row_str += '<td class="text-right">';
-		row_str += '<button id="submit" type="submit" class="btn btn-default" onclick="open_modal(' + folder.folderId + ', \'' + folder.name + '\');"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> <fmt:message key="blog.folders.edit"/></button> ';
-		row_str += '<button id="submit" type="submit" class="btn btn-default" onclick="delete_folder(' + folder.folderId + ');"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> <fmt:message key="blog.folders.delete"/></button>';
+		row_str += '<button id="submit" type="submit" class="btn btn-default" onclick="open_modal_edit(' + folder.folderId + ', \'' + folder.name + '\');"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> <fmt:message key="blog.folders.edit"/></button> ';
+		row_str += '<button id="submit" type="submit" class="btn btn-default" onclick="open_modal_delete(' + folder.folderId + ', \'' + folder.name + '\');"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> <fmt:message key="blog.folders.delete"/></button>';
 		row_str += '</td>';
 		row_str += '</tr>';
 
@@ -76,10 +76,17 @@
 		table_body.append(row_str);
 	};
 	
-	var open_modal = function (folderId, name) {
+	var open_modal_edit = function (folderId, name) {
+		$('#modalerrormsg').hide();
 		$("#foldernameInputText").val(name);
 		$("#folderIdInputHidden").val(folderId);
 		$('#addFolderModal').modal('show');
+	};
+	
+	var open_modal_delete = function (folderId, name) {
+		$("#folderIdInputHidden").val(folderId);
+		$("#deleteFolderModalTitle").text('<fmt:message key="blog.folders.modal.delete"/>' + ' "' + name + '"')
+		$('#deleteFolderModal').modal('show');
 	};
 	
 	var save_folder = function () {
@@ -105,20 +112,21 @@
 	};
 	
 	var delete_folder = function (fId) {
-		var ok = confirm('<fmt:message key="blog.folders.delete.confirm"/>');
-		if (ok) {
-			deleteUrl = '<c:url value="/app/folder/delete"/>',
-			deleteParams = {
-			    folderId: fId
-		  	};
-			$.getJSON(deleteUrl, deleteParams, function(data) {
-				console.log("JSON data query success.");
-				loadRemoteData();
-			});
-		}
+		deleteUrl = '<c:url value="/app/folder/delete"/>',
+		deleteParams = {
+		    folderId: $("#folderIdInputHidden").val()
+	  	};
+		$.getJSON(deleteUrl, deleteParams, function(data) {
+			console.log("JSON data query success.");
+			loadRemoteData();
+		});
 	};
 
 	$(document).ready(function() {
+		$('#addFolderModalForm').submit(function(event) {
+			event.preventDefault();
+			save_folder();
+		});	
 		$('#modalerrormsg').hide();
 		loadRemoteData();
 	});
@@ -139,7 +147,7 @@
 				<h2><fmt:message key="blog.folders.title"/></h2>
 				
 				<div class="pull-right">
-					<button id="submit" type="submit" class="btn btn-default pull-right" onClick="open_modal(-1, '');"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> <fmt:message key="blog.folders.add"/></button>
+					<button id="submit" type="submit" class="btn btn-default pull-right" onClick="open_modal_edit(-1, '');"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> <fmt:message key="blog.folders.add"/></button>
 				</div>				
 				
 				<table class="table table-hover table-striped">
@@ -166,31 +174,50 @@
 			
 		</div>
 		
-		<!-- Modal -->
+		<!-- Edit folder modal -->
 		<div class="modal fade" id="addFolderModal" tabindex="-1" role="dialog">
 		  	<div class="modal-dialog" role="document">
-		    	<div class="modal-content">
+		    	<div class="modal-content">		      		
 		      		<div class="modal-header">
-		        		<button type="button" class="close" data-dismiss="modal" aria-label="<fmt:message key="blog.tags.close"/>"><span aria-hidden="true">&times;</span></button>
-		        		<h4 class="modal-title"><fmt:message key="blog.folders.modal.title"/></h4>
+		        		<button type="button" class="close" data-dismiss="modal" aria-label="<fmt:message key="blog.folders.close"/>"><span aria-hidden="true">&times;</span></button>
+		        		<h4 class="modal-title"><fmt:message key="blog.folders.modal.edit"/></h4>
 		      		</div>
-			      	<div class="modal-body">
-				        <form>
+		      		<form id="addFolderModalForm">      		
+				      	<div class="modal-body">				        
 							<div class="form-group">
 								<h4 id="modalerrormsg"><span class="label label-danger"><fmt:message key="blog.folders.add.notvalid"/></span></h4>
 								<input type="hidden" class="form-control" id="folderIdInputHidden">
 								<label><fmt:message key="blog.folders.label.foldername"/></label>
-								<input type="text" class="form-control" id="foldernameInputText">
-							</div>
-				        </form>
+								<input type="text" class="form-control" id="foldernameInputText">								
+							</div>				        
+					    </div>
+			      		<div class="modal-footer">
+			        		<button type="button" class="btn btn-default" data-dismiss="modal"><fmt:message key="blog.folders.cancel"/></button>
+			        		<button type="submit" class="btn btn-primary"><fmt:message key="blog.folders.save"/></button>
+			      		</div>
+			      	</form>
+		    	</div>
+		  	</div>
+		</div>
+		
+		<!-- Delete folder modal -->
+		<div class="modal fade" id="deleteFolderModal" tabindex="-1" role="dialog">
+		  	<div class="modal-dialog">
+		    	<div class="modal-content">
+		      		<div class="modal-header">
+		        		<button type="button" class="close" data-dismiss="modal" aria-label="<fmt:message key="blog.folders.close"/>"><span aria-hidden="true">&times;</span></button>
+		        		<h4 class="modal-title" id="deleteFolderModalTitle"><fmt:message key="blog.folders.modal.delete"/></h4>
+		      		</div>
+			      	<div class="modal-body">
+						<fmt:message key="blog.folders.delete.confirm"/>						
 				    </div>
 		      		<div class="modal-footer">
-		        		<button type="button" class="btn btn-default" data-dismiss="modal"><fmt:message key="blog.folders.close"/></button>
-		        		<button type="button" class="btn btn-primary" onclick="save_folder();"><fmt:message key="blog.folders.save"/></button>
+		        		<button type="button" class="btn btn-default" data-dismiss="modal"><fmt:message key="blog.folders.cancel"/></button>
+		        		<button type="submit" class="btn btn-primary" onclick="delete_folder();" data-dismiss="modal"><fmt:message key="blog.folders.delete"/></button>
 		      		</div>
 		    	</div>
 		  	</div>
-		</div>		
+		</div>	
 		
 		<jsp:include page="/WEB-INF/views/templates/foot.jsp" />
 
