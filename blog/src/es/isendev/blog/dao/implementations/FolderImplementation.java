@@ -50,7 +50,7 @@ public class FolderImplementation implements FolderInterface {
 	@Transactional(readOnly = true)
 	@SuppressWarnings("unchecked")
 	public List<Folder> findFolderEntities() {
-		Query q = em.createQuery ("SELECT OBJECT(f) FROM Folder f ORDER BY f.creationDate DESC");
+		Query q = em.createQuery ("SELECT OBJECT(f) FROM Folder f ORDER BY f.name ASC");
 		List<Folder> items = q.getResultList();
 		return items;
 	}	

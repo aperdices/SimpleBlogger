@@ -111,7 +111,7 @@
 		return;
 	};
 	
-	var delete_folder = function (fId) {
+	var delete_folder = function () {
 		deleteUrl = '<c:url value="/app/folder/delete"/>',
 		deleteParams = {
 		    folderId: $("#folderIdInputHidden").val()
