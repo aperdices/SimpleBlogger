@@ -60,8 +60,8 @@
 	</bean>
 	
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-		 <!-- Setting maximum upload size -->
-		<property name="maxUploadSize" value="100000" />
+		<!-- Setting maximum upload size -->
+		<property name="maxUploadSizePerFile" value="5242880"/>
 	</bean>	
 
 </beans>

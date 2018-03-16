@@ -30,10 +30,98 @@
 
 	<script type="text/javascript">
 	
-	var back_to_folderlist = function () {
-		newUrl = '<c:url value="/app/folder/list"/>';
-		window.location.href = newUrl;
-	}	
+		var back_to_folderlist = function () {
+			newUrl = '<c:url value="/app/folder/list"/>';
+			window.location.href = newUrl;
+		}	
+	
+		$(document).ready(function() {
+
+			$.ajaxSetup({
+	            headers: {
+	                "X-CSRF-TOKEN": '<c:out value="${_csrf.token}"/>'
+	            }
+			});
+			
+			$('input[type=file]').change(function(){
+
+				$(this).simpleUpload('<c:url value="/app/resource/upload"/>', {
+					
+					
+					allowedExts: ["jpg", "jpeg", "png", "gif"],
+					allowedTypes: ["image/jpeg", "image/png", "image/x-png", "image/gif", "image/x-gif"],
+					maxFileSize: 5242880,
+					data: {
+			            'folderId': '<c:out value="${folder.folderId}"/>'
+			        },
+					
+					/*
+					 * Each of these callbacks are executed for each file.
+					 * To add callbacks that are executed only once, see init() and finish().
+					 *
+					 * "this" is an object that can carry data between callbacks for each file.
+					 * Data related to the upload is stored in this.upload.
+					 */
+
+					start: function(file) {
+						$('.progress-bar').css('width', '0%').attr('aria-valuenow', 0);
+
+						
+						// 						//upload started
+// 						this.block = $('<div class="block"></div>');
+// 						this.progressBar = $('<div class="progressBar"></div>');
+// 						this.block.append(this.progressBar);
+// 						$('#uploads').append(this.block);
+					},
+
+					progress: function(progress){
+						$('.progress-bar').css('width', progress + "%").attr('aria-valuenow', progress);
+						
+// 						//received progress
+// 						this.progressBar.width(progress + "%");
+					}
+
+// 					success: function(data){
+// 						//upload successful
+
+// 						this.progressBar.remove();
+
+// 						/*
+// 						 * Just because the success callback is called doesn't mean your
+// 						 * application logic was successful, so check application success.
+// 						 *
+// 						 * Data as returned by the server on...
+// 						 * success:	{"success":true,"format":"..."}
+// 						 * error:	{"success":false,"error":{"code":1,"message":"..."}}
+// 						 */
+
+// 						if (data.success) {
+// 							//now fill the block with the format of the uploaded file
+// 							var format = data.format;
+// 							var formatDiv = $('<div class="format"></div>').text(format);
+// 							this.block.append(formatDiv);
+// 						} else {
+// 							//our application returned an error
+// 							var error = data.error.message;
+// 							var errorDiv = $('<div class="error"></div>').text(error);
+// 							this.block.append(errorDiv);
+// 						}
+
+// 					},
+
+// 					error: function(error){
+// 						//upload failed
+// 						this.progressBar.remove();
+// 						var error = error.message;
+// 						var errorDiv = $('<div class="error"></div>').text(error);
+// 						this.block.append(errorDiv);
+// 					}
+
+				});
+
+			});
+
+		});	
 	
 // 	var open_modal_edit = function (folderId, name) {
 // 		$('#modalerrormsg').hide();
@@ -42,15 +130,7 @@
 // 		$('#addFolderModal').modal('show');
 // 	};
 
-// 	$(document).ready(function() {
-// 		$('#addFolderModalForm').submit(function(event) {
-// 			event.preventDefault();
-// 			save_folder();
-// 		});	
-// 		$('#modalerrormsg').hide();
-// 		loadRemoteData();
-// 	});
-	
+
 	</script>
 	
 	<jsp:include page="/WEB-INF/views/templates/top.jsp" />
@@ -113,9 +193,19 @@
 <!-- 					<div id="filename"></div> -->
 <!-- 					<div id="progress"></div> -->
 <!-- 					<div id="progressBar"></div>					 -->
-					<label class="btn btn-default">
-    					<span class="glyphicon glyphicon-open-file" aria-hidden="true"></span>&nbsp;<fmt:message key="blog.resources.upload"/><input type="file" name="file" multiple hidden>
-					</label>
+					
+					<div class="progress">
+					  <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+					    <span class="sr-only">0% Complete</span>
+					  </div>
+					</div>
+
+					<form:form name="pageForm" modelAttribute="page" action="save">						    		
+		    			<security:csrfInput />
+						<label class="btn btn-default">
+	    					<span class="glyphicon glyphicon-open-file" aria-hidden="true"></span>&nbsp;<fmt:message key="blog.resources.upload"/><input type="file" name="file" multiple hidden>
+						</label>
+					</form:form>
 					
 				</div>				
 				

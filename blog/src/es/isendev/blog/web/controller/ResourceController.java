@@ -8,8 +8,14 @@ package es.isendev.blog.web.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.io.IOException;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 
 @Controller
 @RequestMapping("/resource")
@@ -22,10 +28,26 @@ public class ResourceController {
 //	@Autowired
 //	private SimpleBloggerConfig simpleBloggerConfig;
 	
-	@RequestMapping(value = "", method = RequestMethod.POST)
-	public ModelAndView resourceUpload() throws Exception {
-		
-		return null;		
-	}	
+    @RequestMapping(value = "/upload", method = RequestMethod.POST)
+    public ModelAndView fileUpload(@RequestParam("file") MultipartFile[] files, Model model) throws IOException {
+
+       for (MultipartFile file : files) {
+    	   if (!file.getOriginalFilename().isEmpty()) {
+             
+    		   System.out.println(">>> Filename: " + file.getOriginalFilename());
+    		   
+//    		 BufferedOutputStream outputStream = new BufferedOutputStream(
+//                   new FileOutputStream(
+//                         new File("D:/MultipleFileUpload", file.getOriginalFilename())));
+//
+//             outputStream.write(file.getBytes());
+//             outputStream.flush();
+//             outputStream.close();
+             
+          }
+       }
+       
+       return new ModelAndView("resourcelist");
+    }    
 	
 }

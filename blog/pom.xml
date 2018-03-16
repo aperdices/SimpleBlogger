@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>SimpleBlogger</groupId>
 	<artifactId>SimpleBlogger</artifactId>
-	<version>0.4</version>
+	<version>0.5</version>
 	<packaging>war</packaging>
 	<name>SimpleBlogger</name>
 	<description>SimpleBlogger Blog Application</description>
