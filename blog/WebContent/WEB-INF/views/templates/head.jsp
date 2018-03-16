@@ -47,6 +47,9 @@
 
     <!-- jQuery Date Format plugin -->
 	<script src="<c:url value='/js/jquery-dateFormat.min.js' />"></script>
+	
+    <!-- jQuery simpleUpload -->
+	<script src="<c:url value='/js/simpleUpload.min.js' />"></script>
 
 	<script>
     	

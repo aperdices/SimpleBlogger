@@ -34,6 +34,12 @@ footer {
 	color: orange;
 }
 
+/* FIX: File upload HTML5 hidden field unsupported on Bootstrap 3 */
+[hidden] {
+  display: none !important;
+}
+/* END FIX: File upload HTML5 hidden field unsupported on Bootstrap 3 */
+
 /* END basic styles */
 
 /* START Customizing Menubar */

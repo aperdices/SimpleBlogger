@@ -4,10 +4,12 @@
 
 package es.isendev.blog.web.controller;
 
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -17,6 +19,7 @@ import java.util.List;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 
 import es.isendev.blog.dao.beans.Folder;
 import es.isendev.blog.dao.interfaces.FolderInterface;
@@ -98,6 +101,36 @@ public class FolderController {
 		return list;
     }
 	
-	
+	// Method to list paged unpublished entries.
+	// Paging related parameters are passed.
+	@RequestMapping(value = "/contents/{folderId}", method = RequestMethod.GET)
+	public ModelAndView showFolderContents(@PathVariable("folderId") int folderId) throws Exception {
+		
+		ModelMap model = new ModelMap();
+		
+		Folder folder = folderInterface.findFolder(folderId);
+
+//		if (numresults > 0) {
+//			if (numresults % simpleBloggerConfig.getEntriesPerPage() == 0) {
+//				lastpage = numresults / simpleBloggerConfig.getEntriesPerPage();
+//			} else {
+//				lastpage = (numresults / simpleBloggerConfig.getEntriesPerPage()) + 1;
+//			}
+//			
+//			// Check if page parameter has a valid value 
+//			if (page < 1) {
+//				// If not, set first page as default value
+//				page = 1;
+//			} else if (page > lastpage) {
+//				page = lastpage;
+//			}
+//			
+//			model.addAttribute("entries", entryInterface.findEntryEntities(page, simpleBloggerConfig.getEntriesPerPage(), false));
+//		}
+		
+    	model.addAttribute("folder", folder);
+    	
+		return new ModelAndView("resourcelist", model);	
+	}	
 	
 }

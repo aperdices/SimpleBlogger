@@ -12,6 +12,15 @@
 <%-- JSTL - Standard Format Library --%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
+<%-- JSTL - Standard Function Library --%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
+<%-- Spring Security Form Tag Library --%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+
+<%-- Spring Security Tag Library --%>
+<%@ taglib uri='http://www.springframework.org/security/tags' prefix='security' %>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -58,9 +67,9 @@
 		row_str += '<td class="text-center">' + $.format.date(cdate, 'yyyy/MM/dd HH:mm:ss') + '</td>';
 		row_str += '<td class="text-center">' + $.format.date(mdate, 'yyyy/MM/dd HH:mm:ss') + '</td>';
 		row_str += '<td class="text-right">';
-		row_str += '<button id="submit" type="submit" class="btn btn-default" onclick="open_modal_edit(' + folder.folderId + ', \'' + folder.name + '\');"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> <fmt:message key="blog.folders.edit"/></button> ';
-		row_str += '<button id="submit" type="submit" class="btn btn-default" onclick="open_modal_delete(' + folder.folderId + ', \'' + folder.name + '\');"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> <fmt:message key="blog.folders.delete"/></button> ';
-		row_str += '<button id="submit" type="submit" class="btn btn-default" onclick="open_resources(' + folder.folderId + ');"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> <fmt:message key="blog.folders.view"/></button>';		
+		row_str += '<button id="submit" type="button" class="btn btn-default" onclick="open_modal_edit(' + folder.folderId + ', \'' + folder.name + '\');"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> <fmt:message key="blog.folders.edit"/></button> ';
+		row_str += '<button id="submit" type="button" class="btn btn-default" onclick="open_modal_delete(' + folder.folderId + ', \'' + folder.name + '\');"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> <fmt:message key="blog.folders.delete"/></button> ';
+		row_str += '<button id="submit" type="button" class="btn btn-default" onclick="open_folder(' + folder.folderId + ');"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> <fmt:message key="blog.folders.view"/></button>';
 		row_str += '</td>';
 		row_str += '</tr>';
 
@@ -113,7 +122,12 @@
 			loadRemoteData();
 		});
 	};
-
+	
+	var open_folder = function (folderId) {
+		newUrl = '<c:url value="/app/folder/contents"/>' + "/" + folderId;
+		window.location.href = newUrl;
+	}
+	
 	$(document).ready(function() {
 		$('#addFolderModalForm').submit(function(event) {
 			event.preventDefault();
@@ -139,7 +153,7 @@
 				<h2><fmt:message key="blog.folders.title"/></h2>
 				
 				<div class="pull-right">
-					<button id="submit" type="submit" class="btn btn-default pull-right" onClick="open_modal_edit(-1, '');"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> <fmt:message key="blog.folders.add"/></button>
+					<button id="button" type="submit" class="btn btn-default pull-right" onClick="open_modal_edit(-1, '');"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;<fmt:message key="blog.folders.add"/></button>
 				</div>				
 				
 				<table class="table table-hover table-striped">

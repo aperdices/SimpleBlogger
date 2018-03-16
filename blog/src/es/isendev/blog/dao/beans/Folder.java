@@ -7,6 +7,7 @@ package es.isendev.blog.dao.beans;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Folder implements Serializable {
@@ -27,6 +28,9 @@ public class Folder implements Serializable {
 	private Date modificationDate;
 
 	private String name;
+	
+    @OneToMany(mappedBy="folder")
+    private List<Resource> resources;
 
 	public Folder() {
 	}
@@ -61,6 +65,10 @@ public class Folder implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public List<Resource> getResources() {
+		return resources;
 	}
 	
 }
