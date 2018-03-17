@@ -21,7 +21,7 @@ public class Resource implements Serializable {
 	@ManyToOne(targetEntity=es.isendev.blog.dao.beans.User.class, optional = false)
 	@JoinColumn(name="USERNAME", referencedColumnName = "USERNAME")
 	private User user;	
-
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="CREATION_DATE")
 	private Date creationDate;
@@ -30,16 +30,19 @@ public class Resource implements Serializable {
 	@Column(name="MODIFICATION_DATE")
 	private Date modificationDate;
 
+	@Column(name="NAME")
 	private String name;
 
 	@ManyToOne
-	@JoinColumn(name="RESOURCE_TYPE_ID")
-	private ResourceType resourceType;
-	
-	@ManyToOne
 	@JoinColumn(name="FOLDER_ID")
-	private Folder folder;	
-
+	private Folder folder;
+	
+	@Column(name="CONTENT_TYPE")
+	private String contentType;
+	
+	@Column(name="SIZE")
+	private long size;
+	
 	public Resource() {
 	}
 
@@ -75,12 +78,36 @@ public class Resource implements Serializable {
 		this.name = name;
 	}
 
-	public ResourceType getResourceType() {
-		return this.resourceType;
+	public User getUser() {
+		return user;
 	}
 
-	public void setResourceType(ResourceType resourceType) {
-		this.resourceType = resourceType;
+	public void setUser(User user) {
+		this.user = user;
 	}
+
+	public Folder getFolder() {
+		return folder;
+	}
+
+	public void setFolder(Folder folder) {
+		this.folder = folder;
+	}
+
+	public String getContentType() {
+		return contentType;
+	}
+
+	public void setContentType(String contentType) {
+		this.contentType = contentType;
+	}
+
+	public long getSize() {
+		return size;
+	}
+
+	public void setSize(long size) {
+		this.size = size;
+	}	
 
 }

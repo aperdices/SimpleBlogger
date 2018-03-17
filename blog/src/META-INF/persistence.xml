@@ -7,6 +7,5 @@
 		<class>es.isendev.blog.dao.beans.User</class>
 		<class>es.isendev.blog.dao.beans.Page</class>
 		<class>es.isendev.blog.dao.beans.Resource</class>
-		<class>es.isendev.blog.dao.beans.ResourceType</class>
 	</persistence-unit>
 </persistence>
