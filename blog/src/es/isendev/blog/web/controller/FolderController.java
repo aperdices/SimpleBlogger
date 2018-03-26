@@ -106,8 +106,10 @@ public class FolderController {
 	@RequestMapping(value = "/contents/{folderId}", method = RequestMethod.GET)
 	public ModelAndView showFolderContents(@PathVariable("folderId") int folderId) throws Exception {
 		
-		ModelMap model = new ModelMap();
+    	System.out.println("FolderController.showFolderContents()");
 		
+		ModelMap model = new ModelMap();
+	
 		Folder folder = folderInterface.findFolder(folderId);
 
 //		if (numresults > 0) {
@@ -128,8 +130,10 @@ public class FolderController {
 //			model.addAttribute("entries", entryInterface.findEntryEntities(page, simpleBloggerConfig.getEntriesPerPage(), false));
 //		}
 		
-    	model.addAttribute("folder", folder);
-    	
+		System.out.println(folder.getResources() != null?folder.getResources().size():0);
+		
+		model.addAttribute("folder", folder);
+		
 		return new ModelAndView("resourcelist", model);	
 	}	
 	

@@ -6,6 +6,9 @@ package es.isendev.blog.dao.beans;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.Date;
 
 @Entity
@@ -35,6 +38,7 @@ public class Resource implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name="FOLDER_ID")
+	@JsonIgnoreProperties("resources")
 	private Folder folder;
 	
 	@Column(name="CONTENT_TYPE")

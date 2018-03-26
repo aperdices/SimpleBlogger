@@ -6,6 +6,9 @@ package es.isendev.blog.dao.beans;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.Date;
 import java.util.List;
 
@@ -30,6 +33,7 @@ public class Folder implements Serializable {
 	private String name;
 	
     @OneToMany(mappedBy="folder")
+    @JsonIgnoreProperties("folder")
     private List<Resource> resources;
 
 	public Folder() {
