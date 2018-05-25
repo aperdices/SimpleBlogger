@@ -11,9 +11,9 @@
 
 <div class="row">
 
-	<div class="col-md-1"></div>
+	<div class="col-md-2"></div>
 
-	<div class="col-md-10">
+	<div class="col-md-8">
 		<!-- Tag Panel -->
 		
 		<div class="panel panel-default">
@@ -29,6 +29,6 @@
 		</div>
 	</div>
 
-	<div class="col-md-1"></div>
+	<div class="col-md-2"></div>
 
 </div>

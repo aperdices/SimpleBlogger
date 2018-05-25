@@ -47,8 +47,8 @@
 
 				$(this).simpleUpload('<c:url value="/app/resource/upload"/>', {
 					
-					allowedExts: ["jpg", "jpeg", "jpe", "jif", "jfif", "jfi", "png", "gif"],
-					allowedTypes: ["image/pjpeg", "image/jpeg", "image/png", "image/x-png", "image/gif", "image/x-gif"]
+					allowedExts: ["jpg", "jpeg", "png", "gif"],
+					allowedTypes: ["image/pjpeg", "image/jpeg", "image/png", "image/x-png", "image/gif", "image/x-gif"],
 					maxFileSize: 5242880,
 					data: {
 			            'folderId': '<c:out value="${folder.folderId}"/>'

@@ -36,8 +36,8 @@
         <div class="row">
 
             <%--  Blog Entries Column --%>
-            <div class="col-md-1"></div>
-            <div class="col-md-10">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
 				
 				<c:choose>
 		
@@ -81,7 +81,7 @@
 				</c:choose>
 		
 			</div>
-			<div class="col-md-1"></div>
+			<div class="col-md-2"></div>
 			
 		</div>
 		

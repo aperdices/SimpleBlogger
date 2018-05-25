@@ -39,7 +39,6 @@ public class FolderController {
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
 	@ResponseBody
 	public List<Folder> listFolders() throws Exception {		
-
 		return folderInterface.findFolderEntities();
 	}
 	
