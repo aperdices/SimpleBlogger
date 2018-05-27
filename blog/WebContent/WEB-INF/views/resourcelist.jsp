@@ -155,16 +155,18 @@
 							<c:when test="${fn:length(folder.resources) > 0}">
 								<c:forEach items="${folder.resources}" var="resource" varStatus="rowNumber">
 									<tr>
-<!-- 										<td> -->
-<%-- 											<a href="<c:url value="/app/page/" /><c:out value="${page.pageId}"/>"><c:out value="${page.title}"/></a> --%>
-<!-- 										</td> -->
+										<td>
+											<c:out value="${resource.name}"/>
+										</td>
+										<td class="text-center"><fmt:formatDate type="both" pattern="yyyy/MM/dd HH:mm" value="${resource.creationDate}" /></td>
+
 <%-- 										<td class="text-center"><c:out value="${page.menuOrder}"/></td> --%>
-<%-- 										<td class="text-center"><fmt:formatDate type="both" pattern="yyyy/MM/dd HH:mm" value="${page.creationDate}" /></td> --%>
+
 <%-- 										<td class="text-center"><fmt:formatDate type="both" pattern="yyyy/MM/dd HH:mm" value="${page.modificationDate}" /></td> --%>
-<!-- 										<td class="text-right">									 -->
+										<td class="text-right">									
 <%-- 											<button id="submit" type="submit" class="btn btn-default" onclick="if (window.confirm('<fmt:message key="blog.pages.delete.confirm"/>')) {location.href='<c:url value="/app/page/" /><c:out value="${page.pageId}/delete"/>'}"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> <fmt:message key="blog.pages.delete"/></button> --%>
 <%-- 											<button id="submit" type="submit" class="btn btn-default" onclick="location.href='<c:url value="/app/page/" /><c:out value="${page.pageId}/edit"/>'"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> <fmt:message key="blog.pages.edit"/></button> --%>
-<!-- 										</td> -->
+										</td>
 									</tr>								
 								</c:forEach>
 							</c:when>				

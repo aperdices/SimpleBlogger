@@ -44,16 +44,18 @@ public class ResourceController {
 	@Autowired
 	private SimpleBloggerConfig simpleBloggerConfig;
 	
-    @RequestMapping(value = "/upload", method = RequestMethod.POST)
-    @ResponseBody
-    public List<Object> resourceUpload(@RequestParam("file") MultipartFile[] files, @RequestParam("folderId") int folderId) throws IOException {
+	@RequestMapping(value = "/upload", method = RequestMethod.POST)
+	@ResponseBody
+	public List<Object> resourceUpload(@RequestParam("file") MultipartFile[] files, @RequestParam("folderId") int folderId) throws IOException {
 
-       for (MultipartFile file : files) {
-    	   if (!file.getOriginalFilename().isEmpty()) {
-             
-    		   Resource res = resourceInterface.createResource();
-    		  
-           		// Pre-fill dates.    		   
+		System.out.println("ResourceController.resourceUpload()");
+
+		for (MultipartFile file : files) {
+			if (!file.getOriginalFilename().isEmpty()) {
+
+				Resource res = resourceInterface.createResource();
+
+				// Pre-fill dates.    		   
 				res.setCreationDate(new Date());
 				res.setModificationDate(res.getCreationDate());
 
@@ -65,23 +67,23 @@ public class ResourceController {
 				res.setFolder(folderInterface.findFolder(folderId));
 				res.setContentType(file.getContentType());
 				res.setSize(file.getSize());
-				
+
 				String filePath = simpleBloggerConfig.getResourcesPath() + "/" + String.format("%08d", folderId) + "/" + res.getName();
-				
+
 				BufferedOutputStream outputStream = new BufferedOutputStream(
 						new FileOutputStream(
 								new File(filePath)));
-				
+
 				outputStream.write(file.getBytes());
 				outputStream.flush();
 				outputStream.close();
-				 
+
 				res = resourceInterface.saveResource(res);
-             
-          }
-       }
-       
-       return null;
-    }    
+
+			}
+		}
+
+		return null;
+	}    
 	
 }

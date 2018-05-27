@@ -7,7 +7,11 @@ package es.isendev.blog.dao.beans;
 import java.io.Serializable;
 import javax.persistence.*;
 
+<<<<<<< HEAD
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+=======
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+>>>>>>> refs/remotes/origin/v0.5
 
 import java.util.Date;
 import java.util.List;
