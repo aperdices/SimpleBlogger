@@ -111,26 +111,6 @@ public class FolderController {
 	
 		Folder folder = folderInterface.findFolder(folderId);
 
-//		if (numresults > 0) {
-//			if (numresults % simpleBloggerConfig.getEntriesPerPage() == 0) {
-//				lastpage = numresults / simpleBloggerConfig.getEntriesPerPage();
-//			} else {
-//				lastpage = (numresults / simpleBloggerConfig.getEntriesPerPage()) + 1;
-//			}
-//			
-//			// Check if page parameter has a valid value 
-//			if (page < 1) {
-//				// If not, set first page as default value
-//				page = 1;
-//			} else if (page > lastpage) {
-//				page = lastpage;
-//			}
-//			
-//			model.addAttribute("entries", entryInterface.findEntryEntities(page, simpleBloggerConfig.getEntriesPerPage(), false));
-//		}
-		
-		System.out.println(folder.getResources() != null?folder.getResources().size():0);
-		
 		model.addAttribute("folder", folder);
 		
 		return new ModelAndView("resourcelist", model);	

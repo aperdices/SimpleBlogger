@@ -21,4 +21,6 @@ public interface ResourceInterface extends Serializable {
     
     public List<Resource> findResourceEntities();
     
+    public List<Resource> findResourceEntitiesByFolder(int folderId);
+    
 }

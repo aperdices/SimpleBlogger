@@ -53,6 +53,15 @@ public class ResourceImplementation implements ResourceInterface {
 		Query q = em.createQuery ("SELECT OBJECT(r) FROM Resource r ORDER BY r.creationDate DESC");
 		List<Resource> items = q.getResultList();
 		return items;
+	}
+
+	@Transactional(readOnly = true)
+	@SuppressWarnings("unchecked")
+	public List<Resource> findResourceEntitiesByFolder(int folderId) {
+		Query q = em.createQuery ("SELECT OBJECT(r) FROM Resource r JOIN r.folder f WHERE f.folderId = :fId ORDER BY r.name ASC");
+		q.setParameter("fId", folderId);
+		List<Resource> items = q.getResultList();
+		return items;
 	}	
 
 }

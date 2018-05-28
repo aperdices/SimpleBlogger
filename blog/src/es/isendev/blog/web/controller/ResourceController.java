@@ -4,6 +4,8 @@
 
 package es.isendev.blog.web.controller;
 
+import org.springframework.web.bind.annotation.PathVariable;
+
 // import org.springframework.ui.ModelMap;
 
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +23,8 @@ import es.isendev.blog.util.SimpleBloggerConfig;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -44,11 +47,38 @@ public class ResourceController {
 	@Autowired
 	private SimpleBloggerConfig simpleBloggerConfig;
 	
+	class SuccessUploadMessage implements Serializable {
+
+		private static final long serialVersionUID = 1L;
+
+		private boolean success;
+		private String message;
+		
+		public boolean isSuccess() {
+			return success;
+		}
+		
+		public void setSuccess(boolean success) {
+			this.success = success;
+		}
+		
+		public String getMessage() {
+			return message;
+		}
+		
+		public void setMessage(String message) {
+			this.message = message;
+		}		
+		
+	}
+	
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
 	@ResponseBody
-	public List<Object> resourceUpload(@RequestParam("file") MultipartFile[] files, @RequestParam("folderId") int folderId) throws IOException {
+	public List<Object> resourceUpload(@RequestParam("file") MultipartFile[] files, @RequestParam("folderId") int folderId)  {
 
 		System.out.println("ResourceController.resourceUpload()");
+		
+		ArrayList<Object> returnList = new ArrayList<Object>();
 
 		for (MultipartFile file : files) {
 			if (!file.getOriginalFilename().isEmpty()) {
@@ -69,21 +99,58 @@ public class ResourceController {
 				res.setSize(file.getSize());
 
 				String filePath = simpleBloggerConfig.getResourcesPath() + "/" + String.format("%08d", folderId) + "/" + res.getName();
-
-				BufferedOutputStream outputStream = new BufferedOutputStream(
-						new FileOutputStream(
-								new File(filePath)));
-
-				outputStream.write(file.getBytes());
-				outputStream.flush();
-				outputStream.close();
-
-				res = resourceInterface.saveResource(res);
-
+				
+				File f = new File(filePath);
+				
+				if (f.exists()) { 
+					
+					SuccessUploadMessage successMessage = new SuccessUploadMessage();
+					successMessage.success = false;
+					successMessage.message = "File already exists";					
+					returnList.add(successMessage);
+					
+				} else {
+				
+					System.out.println("ResourceController.resourceUpload(): Trying to save file <" + filePath +">.");
+	
+					try {
+						
+						BufferedOutputStream outputStream = new BufferedOutputStream(
+								new FileOutputStream(
+										new File(filePath)));
+	
+						outputStream.write(file.getBytes());
+						outputStream.flush();
+						outputStream.close();
+						
+						res = resourceInterface.saveResource(res);
+						
+						SuccessUploadMessage successMessage = new SuccessUploadMessage();
+						successMessage.success = true;
+						successMessage.message = "File successfully uploaded.";					
+						returnList.add(successMessage);
+						
+					} catch (Exception e) {
+						
+						System.out.println("ResourceController.resourceUpload(): Error saving file: " + e.getMessage());
+						e.printStackTrace();
+						
+						SuccessUploadMessage successMessage = new SuccessUploadMessage();
+						successMessage.success = false;
+						successMessage.message = e.getMessage();					
+						returnList.add(successMessage);
+					}
+				}
 			}
 		}
-
-		return null;
-	}    
+		
+		return returnList;
+	}
+	
+	@RequestMapping(value = "/byfolder/{folderId}", method = RequestMethod.GET)
+	@ResponseBody
+	public List<Resource> listResourcesByFolder(@PathVariable("folderId") int folderId) throws Exception {		
+		return resourceInterface.findResourceEntitiesByFolder(folderId);
+	}	
 	
 }
