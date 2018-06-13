@@ -6,5 +6,7 @@
 		<class>es.isendev.blog.dao.beans.Tag</class>
 		<class>es.isendev.blog.dao.beans.User</class>
 		<class>es.isendev.blog.dao.beans.Page</class>
+		<class>es.isendev.blog.dao.beans.Resource</class>
+		<class>es.isendev.blog.dao.beans.Folder</class>
 	</persistence-unit>
 </persistence>

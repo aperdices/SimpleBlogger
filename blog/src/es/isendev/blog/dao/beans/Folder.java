@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
+@Cacheable(false)
 public class Folder implements Serializable {
 
 	private static final long serialVersionUID = 1L;

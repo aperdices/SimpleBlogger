@@ -89,7 +89,7 @@
 					 */
 					 
 					init: function (total_uploads) {
-						$("uploadmsgs").empty();
+						$("#uploadmsgs").empty();
 						console.log("Uploading " + total_uploads + " file/s.");
 					},
 
@@ -106,16 +106,11 @@
 						// $('.progress-bar').css('width', '0%').attr('aria-valuenow', 0);
 						console.log(data);
 						
-						// $("uploadmsgs").append("");
-						
-						// <h4><span class="label label-danger"><fmt:message key="blog.resources.uploaderror"/></span></h4>
-						// <h4><span class="label label-success"><fmt:message key="blog.resources.uploadsuccess"/></span></h4>
-
 						if (data[0].success) {
-							$("uploadmsgs").append('<h4><span class="label label-success"><fmt:message key="blog.resources.uploadsuccess"/></span></h4>');
+							$("#uploadmsgs").append('<h4><span class="label label-success"><fmt:message key="blog.resources.uploadsuccess"/></span></h4>').delay(3000).fadeOut();
 							console.log("File successfully uploaded.");
 						} else {
-							$("uploadmsgs").append('<h4><span class="label label-danger"><fmt:message key="blog.resources.uploaderror"/></span></h4>');
+							$("#uploadmsgs").append('<h4><span class="label label-danger"><fmt:message key="blog.resources.uploaderror"/></span></h4>');
 							console.log("ERROR uploading file: " + data[0].message);
 						}
 
@@ -179,8 +174,7 @@
 					</div>
 				</div>
 				
-				<div class="center-block" id="uploadmsgs">
-				</div>
+				<div class="center-block" id="uploadmsgs"></div>
 				
 				<table class="table table-hover table-striped">
 				    <thead>

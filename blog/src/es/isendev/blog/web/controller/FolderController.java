@@ -100,8 +100,6 @@ public class FolderController {
 		return list;
     }
 	
-	// Method to list paged unpublished entries.
-	// Paging related parameters are passed.
 	@RequestMapping(value = "/contents/{folderId}", method = RequestMethod.GET)
 	public ModelAndView showFolderContents(@PathVariable("folderId") int folderId) throws Exception {
 		
