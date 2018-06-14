@@ -80,49 +80,109 @@
 			            'folderId': '<c:out value="${folder.folderId}"/>'
 			        },
 					
-					/*
-					 * Each of these callbacks are executed for each file.
-					 * To add callbacks that are executed only once, see init() and finish().
-					 *
-					 * "this" is an object that can carry data between callbacks for each file.
-					 * Data related to the upload is stored in this.upload.
-					 */
-					 
-					init: function (total_uploads) {
+					// init: function (total_uploads)
+					// Called when an upload instance is initialized. It is only called once. Returning
+					// false in this callback will cancel all uploads for the instance. Returning an
+					// integer will define a new limit for the max number of files to upload. All uploads
+					// after the new limit will be considered cancelled. However, the cancel callback will
+					// not be called.
+					
+					// total_uploads: (int) The total number of files that are going to be uploaded. 
+					
+			        init: function (total_uploads) {
 						$("#uploadmsgs").empty();
 						console.log("Uploading " + total_uploads + " file/s.");
 					},
+										
+					// finish: function ()
+					// Called after all file uploads for this instance have completed. It is only called once.
+					// This callback may be useful if, for example, you want to re-enable the original file
+					// input after it was disabled in the init callback to prevent more files from being
+					// uploaded simultaneously.
+					
+					finish: function () {
+					},
 
+					// Each of these callbacks are executed for each file.
+					// To add callbacks that are executed only once, see init() and finish().
+					
+					// "this" is an object that can carry data between callbacks for each file.
+					// Data related to the upload is stored in this.upload.
+					
+					// start: function (file) {}					
+					// Called for each file at the start of each upload. Returning false in this
+					// callback will cancel the current upload. However, the cancel callback will
+					// not be called. The upload process is not actually started until this
+					// callback has completed.
+					
+					// file: (obj) The file which is going to be uploaded. Included in file is:
+					// name: filename of the file
+					// size: the size of the file in bytes (only if HTML5)
+					// type: the MIME type of the file or "" if it cannot be determined (only if HTML5)					
+					
 					start: function (file) {
 						console.log("Starting upload of file <" + file.name + ">");
-						// $('.progress-bar').css('width', '0%').attr('aria-valuenow', 0);
+						$("#uploadpb").css('width', '0%').attr('aria-valuenow', 0);
 					},
 
+					// progress: function (progress)
+					// Called for each file when its upload progress has been updated. Note that this
+					// callback will not be called during an upload for pre-HTML5 browsers, since
+					// client-side upload progress can only be achieved in HTML5 browsers. When an upload
+					// is successful, however, this callback will be called with a value of 100 just
+					// before the success callback, for older browsers.
+
+					// progress: (float) The current progress of an upload, from 0-100. 
+					
 					progress: function (progress)  {
-						// $('.progress-bar').css('width', progress + "%").attr('aria-valuenow', progress);
+						$("#uploadpb").css('width', progress + "%").attr('aria-valuenow', progress);
 					},
+					
+					// success: function (data)
+					// Called for each file after it has uploaded successfully. For newer browsers, a successful
+					// upload is triggered only when the server returns with an HTTP status code of 200
+					// and the outputted data can be parsed in accordance with the expect setting. In older
+					// browsers, the HTTP status code is ignored. A successful upload is only triggered by
+					// valid output that can be parsed. Given this, it is recommended that you pass application
+					// errors resulting from your backend script through your output instead of using HTTP status
+					// codes. In your success callback, you would simply check for those errors upon completion.
+					// This will ensure your application is completely backwards-compatible.
+					
+					// data: (varied) The data returned from the server, either as an object or string, as
+					// determined by the expect setting. 
 
 					success: function (data) {						
-						// $('.progress-bar').css('width', '0%').attr('aria-valuenow', 0);
+						$("#uploadpb").css('width', '0%').attr('aria-valuenow', 0);
 						console.log(data);
 						
 						if (data[0].success) {
-							$("#uploadmsgs").append('<h4><span class="label label-success"><fmt:message key="blog.resources.uploadsuccess"/></span></h4>').delay(3000).fadeOut();
+							$("#uploadmsgs").append('<h4><span class="label label-success"><fmt:message key="blog.resources.uploadsuccess"/></span></h4>').delay(1000).fadeOut();
 							console.log("File successfully uploaded.");
 						} else {
 							$("#uploadmsgs").append('<h4><span class="label label-danger"><fmt:message key="blog.resources.uploaderror"/></span></h4>');
 							console.log("ERROR uploading file: " + data[0].message);
 						}
+					},
+					
+					// error: function (error)
+					// Called for each file that has encountered an error. A list of possible errors and
+					// their types can be found here. For newer browsers, this callback will only be called
+					// if the server cannot be reached, an HTTP status code other than 200 was returned, or
+					// the output returned by the server could not be parsed in accordance with the expect setting.
+					// In older browsers, this callback will be called only if the server's output cannot be
+					// parsed. This is just because of the nature of how uploads are handled in older browsers.
+					
+					// error: (obj) An object containing information related to an error. Properties include:
+					// name: the type of error that occurred; See error types
+					// message: the error message for the specific error that occurred
+					// xhr: the jqXHR object that contains the response returned by the server (only exists if
+					// AJAX request was made)
 
+					error: function (error) {
+						// General upload fail.
+						var error = error.message;
+						$("#uploadmsgs").append('<h4><span class="label label-danger">File upload error:' + error + '</span></h4>');
 					}
-
-// 					error: function(error){
-// 						//upload failed
-// 						this.progressBar.remove();
-// 						var error = error.message;
-// 						var errorDiv = $('<div class="error"></div>').text(error);
-// 						this.block.append(errorDiv);
-// 					}
 
 				});
 				
@@ -168,7 +228,7 @@
 				
 				<div class="center-block">
 					<div class="progress">
-					  <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+					  <div id="uploadpb" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
 					    <span class="sr-only">0% Complete</span>
 					  </div>
 					</div>
