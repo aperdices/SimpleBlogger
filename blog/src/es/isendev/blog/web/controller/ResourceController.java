@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import es.isendev.blog.dao.beans.Resource;
 import es.isendev.blog.dao.beans.User;
@@ -28,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -151,6 +153,22 @@ public class ResourceController {
 	@ResponseBody
 	public List<Resource> listResourcesByFolder(@PathVariable("folderId") int folderId) throws Exception {		
 		return resourceInterface.findResourceEntitiesByFolder(folderId);
+	}
+	
+	@RequestMapping(value = "/delete", method = RequestMethod.GET, params={"resourceId"})
+	public ModelAndView deleteResource(@RequestParam("resourceId") int resourceId) throws Exception {
+
+		Resource res = resourceInterface.findResource(resourceId);
+		int folderId = res.getFolder().getFolderId();
+		String filePath = simpleBloggerConfig.getResourcesPath() + "/" + String.format("%08d", folderId) + "/" + res.getName();
+			
+		// Delete resource object.
+		resourceInterface.deleteResource(resourceId);
+		
+		// Delete resource file.
+		FileUtils.deleteQuietly(new File (filePath));
+		
+		return new ModelAndView ("redirect:/app/folder/contents/" + folderId);
 	}	
 	
 }

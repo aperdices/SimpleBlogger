@@ -101,6 +101,9 @@
 					// uploaded simultaneously.
 					
 					finish: function () {
+						setTimeout(function(){
+						    location.reload();
+						},2500);
 					},
 
 					// Each of these callbacks are executed for each file.
@@ -156,7 +159,7 @@
 						console.log(data);
 						
 						if (data[0].success) {
-							$("#uploadmsgs").append('<h4><span class="label label-success"><fmt:message key="blog.resources.uploadsuccess"/></span></h4>').delay(1000).fadeOut();
+							$("#uploadmsgs").append('<h4><span class="label label-success"><fmt:message key="blog.resources.uploadsuccess"/></span></h4>').delay(1500).fadeOut();
 							console.log("File successfully uploaded.");
 						} else {
 							$("#uploadmsgs").append('<h4><span class="label label-danger"><fmt:message key="blog.resources.uploaderror"/></span></h4>');
@@ -255,13 +258,8 @@
 										</td>
 										<td class="text-center"><fmt:formatDate type="both" pattern="yyyy/MM/dd HH:mm" value="${resource.creationDate}" /></td>
 										<td class="text-center"><fmt:formatNumber type="number" value="${resource.size}" />&nbsp;bytes</td>
-
-<%-- 										<td class="text-center"><c:out value="${page.menuOrder}"/></td> --%>
-
-<%-- 										<td class="text-center"><fmt:formatDate type="both" pattern="yyyy/MM/dd HH:mm" value="${page.modificationDate}" /></td> --%>
 										<td class="text-right">									
-<%-- 											<button id="submit" type="submit" class="btn btn-default" onclick="if (window.confirm('<fmt:message key="blog.pages.delete.confirm"/>')) {location.href='<c:url value="/app/page/" /><c:out value="${page.pageId}/delete"/>'}"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> <fmt:message key="blog.pages.delete"/></button> --%>
-<%-- 											<button id="submit" type="submit" class="btn btn-default" onclick="location.href='<c:url value="/app/page/" /><c:out value="${page.pageId}/edit"/>'"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> <fmt:message key="blog.pages.edit"/></button> --%>
+											<button id="submit" type="submit" class="btn btn-default" onclick="if (window.confirm('<fmt:message key="blog.resources.delete.confirm"/>')) {location.href='<c:url value="/app/page/" /><c:out value="${page.pageId}/delete"/>'}"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> <fmt:message key="blog.pages.delete"/></button>
 										</td>
 									</tr>								
 								</c:forEach>
