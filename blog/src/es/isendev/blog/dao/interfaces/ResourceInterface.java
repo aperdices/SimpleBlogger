@@ -16,7 +16,7 @@ public interface ResourceInterface extends Serializable {
 	public Resource saveResource (Resource resource);
 	
 	public void deleteResource (int resourceId);
-    
+	
     public Resource findResource (int ResourceourceId);
     
     public List<Resource> findResourceEntities();

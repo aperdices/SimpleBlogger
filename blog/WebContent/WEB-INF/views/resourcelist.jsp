@@ -30,37 +30,28 @@
 
 	<script type="text/javascript">
 	
-		/*
-		var loadRemoteData = function() {	
-			remoteDataURL = '<c:url value="/app/resource/byfolder/"/>' + <c:out value="${folder.folderId}" />;
-			$.getJSON(remoteDataURL, function(data) {
-				console.log("JSON data query success.");
-				// Remove rows.
-				// $(".folderRow").remove();
-				// Parse JSON response.
-			    $.each(data, function(idx, resource){
-			    	// inject_row ($("#folderTBody"), folder, idx);
-			    	console.log(resource.name);
-			   	});
-			})
-			.done(function() {
-				console.log("JSON data query completed.");
-			})
-			.fail(function() {
-				console.log("JSON data query failed.");
-			})
-			.always(function() {
-			    console.log("loadRemoteData JS function called.");
-			});				
-		};
-		*/
-	
-	
 		var back_to_folderlist = function () {
 			newUrl = '<c:url value="/app/folder/list"/>';
 			window.location.href = newUrl;
 		}	
-	
+
+		var delete_resource = function () {
+			deleteUrl = '<c:url value="/app/resource/delete"/>',
+			deleteParams = {
+			    resourceId: $("#resourceIdInputHidden").val()
+		  	};
+			$.getJSON(deleteUrl, deleteParams, function(data) {
+				console.log("JSON data query success.");
+				location.reload();
+			});
+		};
+		
+		var open_modal_delete = function (resourceId, name) {
+			$("#resourceIdInputHidden").val(resourceId);
+			$("#deleteResourceModalTitle").text('<fmt:message key="blog.resources.modal.delete"/>' + ' "' + name + '"')
+			$('#deleteResourceModal').modal('show');
+		};		
+		
 		$(document).ready(function() {
 
 			$.ajaxSetup({
@@ -258,17 +249,15 @@
 										</td>
 										<td class="text-center"><fmt:formatDate type="both" pattern="yyyy/MM/dd HH:mm" value="${resource.creationDate}" /></td>
 										<td class="text-center"><fmt:formatNumber type="number" value="${resource.size}" />&nbsp;bytes</td>
-										<td class="text-right">									
-											<button id="submit" type="submit" class="btn btn-default" onclick="if (window.confirm('<fmt:message key="blog.resources.delete.confirm"/>')) {location.href='<c:url value="/app/page/" /><c:out value="${page.pageId}/delete"/>'}"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> <fmt:message key="blog.pages.delete"/></button>
+										<td class="text-right">
+											<button id="submit" type="button" class="btn btn-default" onclick="open_modal_delete('${resource.resourceId}', '${resource.name}');"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> <fmt:message key="blog.resources.delete"/></button>							
 										</td>
 									</tr>								
 								</c:forEach>
 							</c:when>				
 							<c:otherwise>
 								<tr>
-									<td><fmt:message key="blog.resources.noresources"/></td>
-									<td>&nbsp;</td>
-									<td>&nbsp;</td>
+									<td colspan="4"><fmt:message key="blog.resources.noresources"/></td>
 								</tr>							
 							</c:otherwise>
 						</c:choose>						    				    
@@ -280,6 +269,26 @@
 			<div class="col-md-1"></div>
 				
 		</div>
+		
+		<!-- Delete resource modal -->
+		<div class="modal fade" id="deleteResourceModal" tabindex="-1" role="dialog">
+		  	<div class="modal-dialog">
+		    	<div class="modal-content">
+		      		<div class="modal-header">
+		        		<button type="button" class="close" data-dismiss="modal" aria-label="<fmt:message key="blog.resources.close"/>"><span aria-hidden="true">&times;</span></button>
+		        		<h4 class="modal-title" id="deleteResourceModalTitle"><fmt:message key="blog.resources.modal.delete"/></h4>
+		      		</div>
+			      	<div class="modal-body">
+			      		<input type="hidden" class="form-control" id="resourceIdInputHidden">
+						<fmt:message key="blog.resources.delete.confirm"/>						
+				    </div>
+		      		<div class="modal-footer">
+		        		<button type="button" class="btn btn-default" data-dismiss="modal"><fmt:message key="blog.resources.cancel"/></button>
+		        		<button type="submit" class="btn btn-primary" onclick="delete_resource();" data-dismiss="modal"><fmt:message key="blog.folders.delete"/></button>
+		      		</div>
+		    	</div>
+		  	</div>
+		</div>		
 				
 		<jsp:include page="/WEB-INF/views/templates/foot.jsp" />
 

@@ -33,7 +33,7 @@ public class Folder implements Serializable {
 
 	private String name;
 	
-    @OneToMany(mappedBy="folder")
+    @OneToMany(mappedBy="folder", cascade=CascadeType.ALL, orphanRemoval=true)
     @JsonManagedReference
     private List<Resource> resources;
 

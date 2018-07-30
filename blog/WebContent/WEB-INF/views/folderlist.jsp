@@ -34,8 +34,12 @@
 		remoteDataURL = '<c:url value="/app/folder/all"/>';
 		$.getJSON(remoteDataURL, function(data) {
 			console.log("JSON data query success.");
+			
 			// Remove rows.
 			$(".folderRow").remove();
+			if (data.length < 1) {
+				$("#folderTBody").append('<tr class="folderRow"><td colspan="4"><fmt:message key="blog.folders.nofolders"/></td></tr>"');
+			}
 			// Parse JSON response.
 		    $.each(data, function(idx, folder){
 		    	inject_row ($("#folderTBody"), folder, idx);
@@ -167,10 +171,7 @@
 				    </thead>
 				    <tbody id="folderTBody">
 						<tr class="folderRow">							
-							<td class="text-center"></td>
-							<td class="text-center"></td>
-							<td class="text-right"></td>
-							<td></td>
+							<td colspan="4"></td>
 						</tr>				    				    
 				    </tbody>
 				</table>

@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
 import es.isendev.blog.dao.beans.Resource;
 import es.isendev.blog.dao.beans.User;
@@ -31,6 +30,9 @@ import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -156,7 +158,8 @@ public class ResourceController {
 	}
 	
 	@RequestMapping(value = "/delete", method = RequestMethod.GET, params={"resourceId"})
-	public ModelAndView deleteResource(@RequestParam("resourceId") int resourceId) throws Exception {
+	@ResponseBody
+	public int deleteResource(@RequestParam("resourceId") int resourceId) throws Exception {
 
 		Resource res = resourceInterface.findResource(resourceId);
 		int folderId = res.getFolder().getFolderId();
@@ -168,7 +171,26 @@ public class ResourceController {
 		// Delete resource file.
 		FileUtils.deleteQuietly(new File (filePath));
 		
-		return new ModelAndView ("redirect:/app/folder/contents/" + folderId);
-	}	
+		return 0;
+		
+    }
 	
+	@RequestMapping(value="/getbyid/{resourceId}", method=RequestMethod.GET)
+	public ResponseEntity<byte[]> getResource (@PathVariable("resourceId") int resourceId) throws Exception {
+
+		Resource res = resourceInterface.findResource(resourceId);
+		int folderId = res.getFolder().getFolderId();
+		String filePath = simpleBloggerConfig.getResourcesPath() + "/" + String.format("%08d", folderId) + "/" + res.getName();
+
+	    // Retrieve resource contents.
+	    byte[] contents = FileUtils.readFileToByteArray(new File(filePath));
+
+	    HttpHeaders headers = new HttpHeaders();
+	    // headers.setContentType(MediaType.parseMediaType("application/pdf"));
+	    headers.setContentDispositionFormData(res.getName(), res.getName());
+	    headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+	    ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(contents, headers, HttpStatus.OK);
+	    return response;
+	}
+		
 }
