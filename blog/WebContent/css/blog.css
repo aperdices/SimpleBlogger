@@ -1,10 +1,11 @@
 /* 	
-	(c) 2016 Antonio Perdices.
+	(c) 2018 Antonio Perdices.
 	License: Public Domain.
 	You can use this code freely and wisely in your applications.
 */
 
 /* START basic styles */
+
 body {
 	/* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
     padding-top: 80px;
@@ -37,6 +38,7 @@ footer {
 /* END basic styles */
 
 /* START Customizing Menubar */
+
 /* Original customization by  http://work.smarchal.com/twbscolor */
 .navbar-default {  
 	
@@ -52,6 +54,7 @@ footer {
 	background-color: #337AB7;
 	border-color: #337AB7;
 }
+
 .navbar-default .navbar-brand {
 
 	/* Modified by APG */
@@ -62,13 +65,16 @@ footer {
 	font-weight: bold;
 	color: #ffffff;
 }
+
 .navbar-default .navbar-brand:hover,
 .navbar-default .navbar-brand:focus {
   color: #ffffff;
 }
+
 .navbar-default .navbar-text {
   color: #ffffff;
 }
+
 .navbar-default .navbar-nav > li > a {
 
 	/* Modified by APG */
@@ -78,42 +84,50 @@ footer {
 	
 	color: #ffffff;
 }
+
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus {	
   	color: #ffffff;
 }
+
 .navbar-default .navbar-nav > .active > a,
 .navbar-default .navbar-nav > .active > a:hover,
 .navbar-default .navbar-nav > .active > a:focus {
   color: #ffffff;
   background-color: #AAAAAA;
 }
+
 .navbar-default .navbar-nav > .open > a,
 .navbar-default .navbar-nav > .open > a:hover,
 .navbar-default .navbar-nav > .open > a:focus {
   color: #ffffff;
   background-color: #AAAAAA;
 }
-.navbar-default .navbar-toggle {
 
-	/* Modified by APG */
+.navbar-default .navbar-toggle {
+  /* Modified by APG */
   margin: 12px;  
   border-color: #ffffff;
 }
+
 .navbar-default .navbar-toggle:hover,
 .navbar-default .navbar-toggle:focus {
   background-color: #AAAAAA;
 }
+
 .navbar-default .navbar-toggle .icon-bar {
   background-color: #ffffff;
 }
+
 .navbar-default .navbar-collapse,
 .navbar-default .navbar-form {
   border-color: #ffffff;
 }
+
 .navbar-default .navbar-link {
   color: #ffffff;
 }
+
 .navbar-default .navbar-link:hover {
   color: #ffffff;
 }
@@ -136,30 +150,17 @@ footer {
 
 /* END Customizing Menubar */
 
-/* START Bootstrap img-responsive fix */
-
-.img-responsive {
-	max-width: 767px;
-}
-
-@media (max-width: 767px) {
-	.img-responsive {
-		max-width: 100%;
-	}
-}
-
-/* END Bootstrap img-responsive fix */
-
 /* START Bootstrap carousel fix */
 
 .carousel {
   max-width: 767px;
+  max-height: 575px;
 }
 
 .carousel-inner > .item > img,
 .carousel-inner > .item > a > img {
- 	max-height: 767px;
  	max-width: 767px;
+ 	max-height: 575px;
 	margin: 0 auto;
 }
 
@@ -174,7 +175,6 @@ footer {
 	 	max-width: 100%;
 		margin: 0 auto;
 	}
-
 }
 
 .carousel-inner {
