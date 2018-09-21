@@ -1,5 +1,5 @@
 <%-- 	
-	(c) 2016 Antonio Perdices.
+	(c) 2018 Antonio Perdices.
 	License: Public Domain.
 	You can use this code freely and wisely in your applications.
 --%>
@@ -33,8 +33,8 @@
         <div class="row">
 
             <%--  Blog Entries Column --%>
-            <div class="col-md-1"></div>
-            <div class="col-md-10">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
             
             <h2><fmt:message key="blog.pageform.title"/></h2>
             
@@ -113,7 +113,7 @@
 			</div>
 			
 			</div>
-			<div class="col-md-1"></div>
+			<div class="col-md-2"></div>
 			
 		</div>
 		

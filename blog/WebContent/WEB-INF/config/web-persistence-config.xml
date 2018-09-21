@@ -84,13 +84,13 @@
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
 
 		<!-- Database driver class -->
-		<property name="driverClass" value="com.mysql.jdbc.Driver" />
+		<property name="driverClass" value="com.mysql.cj.jdbc.Driver" />
 		
 		<!-- DEV database -->
-		<property name="jdbcUrl" value="jdbc:mysql://127.0.0.1:3306/pblog" />
+		<property name="jdbcUrl" value="jdbc:mysql://127.0.0.1:3306/pblog?useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=Europe/Madrid" /> 
 
 		<!-- PROD database -->
-		<!-- <property name="jdbcUrl" value="jdbc:mysql://192.168.100.2:3306/pblog" /> -->
+<!-- 		<property name="jdbcUrl" value="jdbc:mysql://192.168.100.2:3306/pblog?useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=Europe/Madrid" /> -->
 
 		<!-- Credentials -->
 		<property name="user" value="blog" />

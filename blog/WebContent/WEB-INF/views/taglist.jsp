@@ -142,8 +142,8 @@
         <div class="row">
 
             <%--  Blog Entries Column --%>
-            <div class="col-md-1"></div>
-            <div class="col-md-10">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
 		
 				<h2><fmt:message key="blog.tags.title"/></h2>
 				
@@ -171,7 +171,7 @@
 				</table>
 				
 			</div>
-			<div class="col-md-1"></div>
+			<div class="col-md-2"></div>
 			
 		</div>
 		

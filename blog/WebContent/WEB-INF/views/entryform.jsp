@@ -1,5 +1,5 @@
 <%-- 	
-	(c) 2016 Antonio Perdices.
+	(c) 2018 Antonio Perdices.
 	License: Public Domain.
 	You can use this code freely and wisely in your applications.
 --%>
@@ -33,8 +33,8 @@
         <div class="row">
 
             <%--  Blog Entries Column --%>
-            <div class="col-md-1"></div>
-            <div class="col-md-10">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
             
 	            <h2><fmt:message key="blog.entryform.title"/></h2>
 	
@@ -76,8 +76,8 @@
 						
 						<div class="form-group">
 					    	<form:label path="creationDate"><fmt:message key="blog.entryform.label.creationdate"/></form:label>
-							<%-- HTML5 fatime-local field uses RFC3339 date formatting --%>
-							<input class="form-control" type="datetime-local" name="creationDate" id="creationDate" value="<fmt:formatDate type="both" pattern="yyyy-MM-dd'T'HH:mm:ss" value="${entry.creationDate}"/>" required="required">
+							<%-- HTML5 datetime-local field uses RFC3339 date formatting --%>
+							<input class="form-control" type="datetime-local" name="creationDate" id="creationDate" value="<fmt:formatDate type="both" pattern="yyyy-MM-dd'T'HH:mm" value="${entry.creationDate}"/>" required="required">
 					    	<p><span class="label label-danger"><form:errors path="creationDate"/></span></p>
 						</div>
 	
@@ -125,7 +125,7 @@
 	            </div>
             
 			</div>
-			<div class="col-md-1"></div>
+			<div class="col-md-2"></div>
 			
 		</div>
 		

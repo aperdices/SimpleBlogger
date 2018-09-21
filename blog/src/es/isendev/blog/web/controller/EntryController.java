@@ -1,4 +1,4 @@
-// (c) 2016 Antonio Perdices.
+// (c) 2018 Antonio Perdices.
 // License: Public Domain.
 // You can use this code freely and wisely in your applications.
 
@@ -62,8 +62,8 @@ public class EntryController {
     protected void initBinder(HttpServletRequest request, ServletRequestDataBinder dataBinder) throws Exception {
 		
 		// Register a custom date editor to parse "creationDate" field.
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-		df.setLenient(false);
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+		// df.setLenient(false);
 		dataBinder.registerCustomEditor(Date.class, "creationDate", new CustomDateEditor(df, false));
 
 		// Register a class editor to parse "user" field.
