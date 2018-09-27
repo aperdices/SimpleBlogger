@@ -65,19 +65,18 @@
 			                </h2>
 			                
 			                <%-- Author --%>
-			                
-	            				<c:choose>
-									<c:when test="${entry.published}">
-										<p class="lead">
-											<fmt:message key="blog.entry.username"/> <c:out value="${entry.user.username}"/>.
-										<p>
-									</c:when>
-									<c:otherwise>
-										<p><span class="label label-info">
-											<fmt:message key="blog.entry.notpublished"/>
-										</span></p>
-									</c:otherwise>
-								</c:choose>
+            				<c:choose>
+								<c:when test="${entry.published}">
+									<p class="lead">
+										<fmt:message key="blog.entry.username"/> <c:out value="${entry.user.username}"/>.
+									<p>
+								</c:when>
+								<c:otherwise>
+									<p><span class="label label-info">
+										<fmt:message key="blog.entry.notpublished"/>
+									</span></p>
+								</c:otherwise>
+							</c:choose>
 			                
 			                <%-- Date --%>
 			                <p>
@@ -95,13 +94,25 @@
 			                </c:if>
 			                
 			                <%-- <hr> --%>
-							
-							<%-- Content --%>
-							<div class="vertical-spacing-wrapper">							
-								<c:out value="${entry.bodyProcessed}" escapeXml="false"/>
-								<%-- <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a> --%>
-							</div>
 			                
+			                <%-- Content --%>
+			                <c:choose>
+				                <c:when test="${not empty entry.header}">
+									<div class="vertical-spacing-wrapper">							
+										<c:out value="${entry.headerProcessed}" escapeXml="false"/>
+										<a class="btn btn-primary hide-me" role="button" data-toggle="collapse" href="#collapse<c:out value="${entry.entryId}" />" aria-expanded="false" aria-controls="collapse<c:out value="${entry.entryId}" />">Read more...</a>
+										<div class="collapse" id="collapse<c:out value="${entry.entryId}" />">
+											<c:out value="${entry.bodyProcessed}" escapeXml="false"/>
+										</div>
+									</div>
+								</c:when>
+								<c:otherwise>
+									<div class="vertical-spacing-wrapper">							
+										<c:out value="${entry.bodyProcessed}" escapeXml="false"/>
+									</div>							
+								</c:otherwise>
+							</c:choose>
+							
 							<%-- Commands --%>
 							<p class="text-right">
 								<security:authorize access="hasAnyRole('ROLE_ADMIN')">

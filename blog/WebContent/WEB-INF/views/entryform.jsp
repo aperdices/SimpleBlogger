@@ -80,6 +80,30 @@
 							<input class="form-control" type="datetime-local" name="creationDate" id="creationDate" value="<fmt:formatDate type="both" pattern="yyyy-MM-dd'T'HH:mm" value="${entry.creationDate}"/>" required="required">
 					    	<p><span class="label label-danger"><form:errors path="creationDate"/></span></p>
 						</div>
+
+				    	<div class="form-group">
+					    	<form:label path="header"><fmt:message key="blog.entryform.label.header"/></form:label>
+							<p>
+								<a href="javascript:insertAtCursor('header', '[b][/b]')"><span class="label label-info"><fmt:message key="blog.form.editor.bold"/></span></a>
+								<a href="javascript:insertAtCursor('header', '[i][/i]')"><span class="label label-info"><fmt:message key="blog.form.editor.italic"/></span></a>
+								<a href="javascript:insertAtCursor('header', '[u][/u]')"><span class="label label-info"><fmt:message key="blog.form.editor.underline"/></span></a>
+								<a href="javascript:insertAtCursor('header', '[size=\'\'][/size]')"><span class="label label-info"><fmt:message key="blog.form.editor.size"/></span></a>
+								<a href="javascript:insertAtCursor('header', '[color=\'blue\'][/color]')"><span class="label label-info"><fmt:message key="blog.form.editor.color"/></span></a>
+								<a href="javascript:insertAtCursor('header', '[code][/code]')"><span class="label label-info"><fmt:message key="blog.form.editor.code"/></span></a>
+								<a href="javascript:insertAtCursor('header', '[quote][/quote]')"><span class="label label-info"><fmt:message key="blog.form.editor.quote"/></span></a>
+								<a href="javascript:insertAtCursor('header', '[quote=\'user\'][/quote]')"><span class="label label-info"><fmt:message key="blog.form.editor.quoteuser"/></span></a>
+								<a href="javascript:insertAtCursor('header', '[url][/url]')"><span class="label label-info"><fmt:message key="blog.form.editor.url"/></span></a>
+								<a href="javascript:insertAtCursor('header', '[url=\'http://\'][/url]')"><span class="label label-info"><fmt:message key="blog.form.editor.namedurl"/></span></a>
+								<a href="javascript:insertAtCursor('header', '[list][*]\n[*]\n[*][/list]')"><span class="label label-info"><fmt:message key="blog.form.editor.list"/></span></a>
+								<a href="javascript:insertAtCursor('header', '[list=\'1\'][*]\n[*]\n[*][/list]')"><span class="label label-info"><fmt:message key="blog.form.editor.numberedlist"/></span></a>
+								<a href="javascript:insertAtCursor('header', '[img]http://[/img]')"><span class="label label-info"><fmt:message key="blog.form.editor.image"/></span></a>
+								<a href="javascript:insertAtCursor('header', '[img=\'http://\']title[/img]')"><span class="label label-info"><fmt:message key="blog.form.editor.titledimage"/></span></a>
+								<a href="javascript:insertAtCursor('header', '[carousel][*]\n[*]\n[*][/carousel]')"><span class="label label-info"><fmt:message key="blog.form.editor.carousel"/></span></a>
+								<a href="javascript:insertAtCursor('header', '[youtube]videoId[/youtube]')"><span class="label label-info"><fmt:message key="blog.form.editor.youtube"/></span></a>
+							</p>					    	
+					    	<form:textarea class="form-control textarea_medium" path="header"/>
+					    	<p><span class="label label-danger"><form:errors path="header"/></span></p>
+						</div>
 	
 						<div class="form-group">
 							<form:label path="body"><fmt:message key="blog.entryform.label.body"/></form:label>

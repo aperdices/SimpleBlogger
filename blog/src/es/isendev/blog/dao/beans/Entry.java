@@ -1,4 +1,4 @@
-// (c) 2016 Antonio Perdices.
+// (c) 2018 Antonio Perdices.
 // License: Public Domain.
 // You can use this code freely and wisely in your applications.
 
@@ -13,7 +13,6 @@ import javax.persistence.Entity;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
-import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.ManyToOne;
@@ -45,7 +44,9 @@ public class Entry implements Serializable {
 	@Column(name="DESCRIPTION")
 	private String description;
 
-	@Lob
+	@Column(name="HEADER")
+	private String header;	
+	
 	@Column(name="BODY")
 	private String body;
 
@@ -75,6 +76,14 @@ public class Entry implements Serializable {
 		bbCodeProcessor.setAcceptHTML(false);
 		return bbCodeProcessor.prepareEntryText(body);
 	}
+	
+	// Get header string with embedded BBCode processed	
+	public String getHeaderProcessed() {
+		ProcessBBCode bbCodeProcessor = new ProcessBBCode();
+		bbCodeProcessor.setAcceptBBCode(true);
+		bbCodeProcessor.setAcceptHTML(false);
+		return bbCodeProcessor.prepareEntryText(header);
+	}	
 	
 	public int getEntryId() {
 		return entryId;
@@ -106,6 +115,14 @@ public class Entry implements Serializable {
 
 	public String getDescription() {
 		return description;
+	}
+	
+	public String getHeader() {
+		return header;
+	}
+
+	public void setHeader(String header) {
+		this.header = header;
 	}
 
 	public String getBody() {

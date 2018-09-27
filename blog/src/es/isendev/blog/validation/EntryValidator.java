@@ -24,6 +24,7 @@ public class EntryValidator implements Validator {
 		
 		// ValidationUtils methods default to default message if message code is not specified.		
         ValidationUtils.rejectIfEmptyOrWhitespace(errs, "title", "field.required");
+        ValidationUtils.rejectIfEmpty(errs, "description", "field.required");
         ValidationUtils.rejectIfEmpty(errs, "body", "field.required");
 
 	}
