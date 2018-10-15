@@ -100,7 +100,7 @@
 				                <c:when test="${not empty entry.header}">
 									<div class="vertical-spacing-wrapper">							
 										<c:out value="${entry.headerProcessed}" escapeXml="false"/>
-										<a class="btn btn-primary hide-me" role="button" data-toggle="collapse" href="#collapse<c:out value="${entry.entryId}" />" aria-expanded="false" aria-controls="collapse<c:out value="${entry.entryId}" />">Read more...</a>
+										<a class="btn btn-primary hide-me" role="button" data-toggle="collapse" href="#collapse<c:out value="${entry.entryId}" />" aria-expanded="false" aria-controls="collapse<c:out value="${entry.entryId}" />"><fmt:message key="blog.entry.readmore"/></a>
 										<div class="collapse" id="collapse<c:out value="${entry.entryId}" />">
 											<c:out value="${entry.bodyProcessed}" escapeXml="false"/>
 										</div>

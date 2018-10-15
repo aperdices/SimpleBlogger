@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!-- 	
-	(c) 2017 Antonio Perdices.
+	(c) 2018 Antonio Perdices.
 	License: Public Domain.
 	You can use this code freely and wisely in your applications.
 -->
@@ -24,7 +24,7 @@
 			- login-page="/app/login" (go to "login" View, configured by an "mvc:view-controller" entry in web-mvc-config.xml).
 			- login-processing-url="/app/loginProcess" (default Spring Security login controller URL).
 			- default-target-url="/app/entries" (page to load after succesful login).
-			- authentication-failure-url="/app/login?login_error=1" (page to load after failer login).
+			- authentication-failure-url="/app/login?login_error=1" (page to load after failed login).
 		-->
 		<form-login login-page="/app/login" login-processing-url="/app/loginProcess" default-target-url="/app/entries" authentication-failure-url="/app/login?login_error=1" />
 
@@ -42,7 +42,7 @@
 		<intercept-url pattern="/app/entry/**/publish" access="hasRole('ROLE_ADMIN')"/>
 		<intercept-url pattern="/app/entry/**/unpublish" access="hasRole('ROLE_ADMIN')"/>
 		
-		<intercept-url pattern="/app/entries/unpublished" access="hasRole('ROLE_ADMIN')"/>
+		<intercept-url pattern="/app/entries/unpublished/*" access="hasRole('ROLE_ADMIN')"/>
 		
 		<intercept-url pattern="/app/tag/list" access="hasRole('ROLE_ADMIN')"/>
 		<intercept-url pattern="/app/tag/all" access="hasRole('ROLE_ADMIN')"/>
