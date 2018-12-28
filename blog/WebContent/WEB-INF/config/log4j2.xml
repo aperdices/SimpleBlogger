@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Configuration>
+
+	<Appenders>
+		
+		<!-- Console Appender -->
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout
+				pattern="%d{yyyy-MMM-dd HH:mm:ss a} [%t] %-5level %logger{36} - %msg%n" />
+		</Console>
+		
+		<!-- File Appender -->
+		<File name="File" fileName="/var/log/blog.log">
+			<PatternLayout
+				pattern="%d{yyyy-MMM-dd HH:mm:ss a} [%t] %-5level %logger{36} - %msg%n" />
+		</File>
+
+	</Appenders>
+
+	<Loggers>
+
+		<!-- Set logging for org.springframework -->
+		<Logger name="org.springframework" level="info" additivity="false">
+			<AppenderRef ref="Console" />
+			<!-- <AppenderRef ref="File" /> -->
+		</Logger>
+		
+		<!-- Set logging for com.zaxxer (HirakiCP) -->
+		<Logger name="com.zaxxer" level="info" additivity="false">
+			<AppenderRef ref="Console" />
+			<!-- <AppenderRef ref="File" /> -->
+		</Logger>
+		
+		<!-- Set logging for eclipselink -->
+		<!-- Must be configured to get Custom EclipseLink SessionLog work properly -->
+		<Logger name="eclipselink" level="info" additivity="false">
+			<AppenderRef ref="Console" />
+			<!-- <AppenderRef ref="File" /> -->
+		</Logger>
+		
+		<Root level="error">
+			<AppenderRef ref="Console" />
+			<!-- <AppenderRef ref="File" /> -->
+		</Root>
+
+	</Loggers>
+
+</Configuration>

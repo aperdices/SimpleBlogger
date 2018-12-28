@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!-- 	
-	(c) 2016 Antonio Perdices.
+	(c) 2018 Antonio Perdices.
 	License: Public Domain.
 	You can use this code freely and wisely in your applications.
 -->
 
-<web-app id="WebApp_ID" version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+<web-app id="SimpleBlogger_ID" version="3.0" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_3_0.xsd">
 
 	<display-name>simpleblogger</display-name>
 
@@ -25,31 +25,14 @@
 	
 	<!--
         Location of the Log4J config file, for initialization and refresh checks.
-		Applied by Log4jConfigListener.
+		In Servlet 3.0 and newer web applications Log4j 2 is automatically loaded
+		by a ServletContainerInitializer (Log4jServletContainerInitializer).
 	-->
     <context-param>
-        <param-name>log4jConfigLocation</param-name>
-        <param-value>/WEB-INF/config/log4j.properties</param-value>
+        <param-name>log4jConfiguration</param-name>
+        <param-value>/WEB-INF/config/log4j2.xml</param-value>
     </context-param>
-
-    <!--
-		Configures Log4J for this web app.
-		As this context specifies a context-param "log4jConfigLocation", its file path
-		is used to load the Log4J configuration, including periodic refresh checks.
-		
-		Would fall back to default Log4J initialization (non-refreshing) if no special
-		context-params are given.
-		
-		Exports a "web app root key", i.e. a system property that specifies the root
-		directory of this web app, for usage in log file paths.
-        -->
-    <!--
-        Leave the listener commented-out if using JBoss.
-    -->
-	<listener>
-		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
-	</listener>
-
+    
 	<!--
 		Loads the root application context of this web app at startup.
 		Use WebApplicationContextUtils.getWebApplicationContext(servletContext)

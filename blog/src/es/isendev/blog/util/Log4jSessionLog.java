@@ -1,4 +1,4 @@
-// (c) 2016 Antonio Perdices.
+// (c) 2018 Antonio Perdices.
 // License: Public Domain.
 // You can use this code freely and wisely in your applications.
 
@@ -8,32 +8,27 @@ import java.io.Writer;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.eclipse.persistence.logging.AbstractSessionLog;
 import org.eclipse.persistence.logging.SessionLog;
 import org.eclipse.persistence.logging.SessionLogEntry;
 
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
-
-// Implements SessionLog for log4j that implements all the generic logging functions.
+// Implements SessionLog for log4j 2 that implements all the generic logging functions.
 // It contains a singleton SessionLog that logs messages from outside any EclipseLink session.
 // The singleton SessionLog can also be passed to an EclipseLink session when messages
 // are logged through that session.
 
 // The purpose of this class is allow EclipseLink be incorporated in a project which is already
-// using log4j. This class enables EclipeLink to log within the already established log4j 
+// using log4j. This class enables EclipseLink to log within the already established log4j 
 // framework, Appenders, etc.
-
-// Usage of EclipseLink JPA Logging Extensions.
-//
-// Property: eclipselink.logging.logger
-// Usage: Select the type of logger to use, this class.
-//
-// Property: eclipselink.logging.level 
-// Usage: This property is ignored. Control the amount and detail of log output by configuring the log4j level.
 
 public class Log4jSessionLog extends AbstractSessionLog  implements SessionLog {
 
+	// Custom Log4j LoggerName
+	private String log4jLoggerName = "eclipselink";
+	
 	// Log4j Logger class to perform logging.
 	// Must be static so only one Logger for Eclipselink is created.
 	protected static Logger lg;
@@ -58,15 +53,12 @@ public class Log4jSessionLog extends AbstractSessionLog  implements SessionLog {
 	// The keys are category names. The values are log levels.
     protected Map<String, Integer> categoryLogLevelMap = new HashMap<String, Integer>();
     
-    // Log4Java Level
-    Level log4jLevel;
-	
 	// Create a new Log4jSessionLog.
 	public Log4jSessionLog () {
 		
 		// Instantiate Logger object for Eclipselink.
 		if (lg == null) {
-			lg = Logger.getLogger("eclipselink");
+			lg = LogManager.getLogger(log4jLoggerName);
 		}
 		
 		// Get log4j configured level and match it to an EclipseLink level.
@@ -118,7 +110,7 @@ public class Log4jSessionLog extends AbstractSessionLog  implements SessionLog {
 	// See levelMap var for details.
 	protected Level getLog4jLevel(int level) {
 		Integer levelInt = new Integer(level);
-		if ( levelMap.containsKey(levelInt)) {
+		if (levelMap.containsKey(levelInt)) {
 			return levelMap.get(levelInt);
 		} else {
 			return Level.DEBUG;
@@ -175,8 +167,6 @@ public class Log4jSessionLog extends AbstractSessionLog  implements SessionLog {
 		return null;
 	}
 	
-	// Log4j appenders and configuration controls where and how
-	// logs are written.  This is dummy method for compatibility.
 	@Override
 	public void setWriter(Writer log) {
 	}

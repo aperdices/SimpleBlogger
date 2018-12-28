@@ -12,11 +12,11 @@
 
 	<bean id="simpleBloggerConfig" class="es.isendev.blog.util.SimpleBloggerConfig" >
 		<property name="blogTitle" value="isendev.com"/>
-		<property name="blogFootMessage" value="Designed and built by isendev / 2018 / SimpleBlogger Engine v.0.4.4"/>
-<!-- 		<property name="blogUrl" value="http://www.isendev.com"/> -->
+		<property name="blogFootMessage" value="Designed and built by isendev / 2018 / SimpleBlogger Engine v.0.4.5"/>
+		<!-- <property name="blogUrl" value="http://www.isendev.com"/> -->
 		<property name="blogUrl" value="http://localhost:8080"/>		
 		<property name="rssFeedDescription" value="isendev.com blog RSS feed"/>
-		<property name="entriesPerPage" value="3"/>
+		<property name="entriesPerPage" value="4"/>
 		<property name="facebookAppId" value="292649957507704"/>
 		<property name="myTwitterUrl" value="https://twitter.com/antonioperdices"/>
 		<property name="myInstagramUrl" value="http://instagram.com/aperdices"/>
