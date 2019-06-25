@@ -1,4 +1,4 @@
--- (c) 2018 Antonio Perdices.
+-- (c) 2019 Antonio Perdices.
 -- License: Public Domain.
 -- You can use this code freely and wisely in your applications.
 
