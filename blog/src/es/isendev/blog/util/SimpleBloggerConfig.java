@@ -14,7 +14,6 @@ public class SimpleBloggerConfig {
 	
 	private int entriesPerPage;
 	
-	private String facebookAppId;
 	private String myTwitterUrl;
 	private String myInstagramUrl;
 	
@@ -56,14 +55,6 @@ public class SimpleBloggerConfig {
 
 	public int getEntriesPerPage() {
 		return entriesPerPage;
-	}
-
-	public String getFacebookAppId() {
-		return facebookAppId;
-	}
-
-	public void setFacebookAppId(String facebookAppId) {
-		this.facebookAppId = facebookAppId;
 	}
 
 	public String getMyInstagramUrl() {

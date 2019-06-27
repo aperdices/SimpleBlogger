@@ -130,7 +130,6 @@
 								<c:choose>
 									<c:when test="${entry.published}">
 										<!-- <a href="#" class="twitter" onclick="return twitterShare ('<c:out value="${simpleBloggerConfig.blogUrl}" /><c:url value="/app/entry/${entry.entryId}"/>')">&nbsp;<span class="glyphicon glyphicon-share"></span>&nbsp;<fmt:message key="blog.entry.twitter"/></a> -->
-										<!-- <a href="#" class="facebook" onclick="return facebookShare ('<c:out value="${simpleBloggerConfig.blogUrl}" /><c:url value="/app/entry/${entry.entryId}"/>', '<c:out value="${simpleBloggerConfig.blogUrl}" /><c:url value="/imgs/fblogo.gif"/>', '<spring:message text="${entry.title}" javaScriptEscape="true"/>', '<c:out value="${simpleBloggerConfig.blogTitle}" />', '<spring:message text="${entry.description}" javaScriptEscape="true"/>', 'http://www.facebook.com')">&nbsp;<span class="glyphicon glyphicon-share"></span>&nbsp;<fmt:message key="blog.entry.facebook"/></a> -->
 										<a href="<c:out value="${simpleBloggerConfig.blogUrl}" /><c:url value="/app/entry/${entry.entryId}"/>" class="permalink"  rel="bookmark" title="<spring:message text="${entry.title}" javaScriptEscape="true"/>">&nbsp;<span class="glyphicon glyphicon-link"></span>&nbsp;<fmt:message key="blog.entry.permalink"/></a>
 									</c:when>
 								</c:choose>							

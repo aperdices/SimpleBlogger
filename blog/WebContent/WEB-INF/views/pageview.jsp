@@ -65,7 +65,6 @@
 							<c:choose>
 								<c:when test="${page.menuOrder > 0}">
 									<a href="#" class="twitter" onclick="return twitterShare ('<c:out value="${simpleBloggerConfig.blogUrl}" /><c:url value="/app/page/${page.pageId}"/>')">&nbsp;<span class="glyphicon glyphicon-share"></span>&nbsp;<fmt:message key="blog.pages.twitter"/></a>
-									<a href="#" class="facebook" onclick="return facebookShare ('<c:out value="${simpleBloggerConfig.blogUrl}" /><c:url value="/app/page/${page.pageId}"/>', '<c:out value="${simpleBloggerConfig.blogUrl}" /><c:url value="/imgs/fblogo.gif"/>', '<spring:message text="${entry.title}" javaScriptEscape="true"/>', '<c:out value="${simpleBloggerConfig.blogTitle}" />', '<spring:message text="${page.title}" javaScriptEscape="true"/>', 'http://www.facebook.com')">&nbsp;<span class="glyphicon glyphicon-share"></span>&nbsp;<fmt:message key="blog.pages.facebook"/></a>
 									<a href="<c:out value="${simpleBloggerConfig.blogUrl}" /><c:url value="/app/page/${page.pageId}"/>" class="permalink"  rel="bookmark" title="<spring:message text="${page.title}" javaScriptEscape="true"/>">&nbsp;<span class="glyphicon glyphicon-link"></span>&nbsp;<fmt:message key="blog.pages.permalink"/></a>
 								</c:when>
 							</c:choose>							

@@ -49,24 +49,7 @@
 	<script src="<c:url value='/js/jquery-dateFormat.min.js' />"></script>
 
 	<script>
-    	
-		// Facebook sharing.
-		function facebookShare (url, imageUrl, name, caption, description, redirectUrl) {
-			var fbsUrl = "http://www.facebook.com/dialog/feed";
-			fbsUrl += "?app_id=" + '<c:out value="${simpleBloggerConfig.facebookAppId}" />';
-			fbsUrl += "&link=" + encodeURIComponent(url);
-			fbsUrl += "&picture=" + encodeURIComponent(imageUrl);
-			fbsUrl += "&name=" + encodeURIComponent(name);
-			fbsUrl += "&caption=" + encodeURIComponent(caption);
-			if (description != undefined && description != '') {
-				fbsUrl += "&description=" + encodeURIComponent(description);
-			}
-			fbsUrl += "&redirect_uri=" + encodeURIComponent(redirectUrl);
-			// window.open(fbsUrl, 'Facebook', 'toolbar=0,status=0,width=1024,height=535');
-			window.open(fbsUrl, 'Facebook', 'toolbar=0,status=0');
-			return false;
-		};
-		
+    		
 		// Twitter sharing.
 		function twitterShare (url) {
 			var twsUrl = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(url);

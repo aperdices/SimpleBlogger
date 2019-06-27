@@ -82,8 +82,8 @@
 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
 
 	    <property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
-		<property name="jdbcUrl" value="jdbc:mysql://127.0.0.1:3306/dblog?useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=Europe/Madrid" />
-		<!-- <property name="jdbcUrl" value="jdbc:mysql://127.0.0.1:3306/dblog?useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=Europe/Madrid" /> -->
+		<!--  <property name="jdbcUrl" value="jdbc:mysql://127.0.0.1:3306/dblog?useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=Europe/Madrid" /> -->
+		<property name="jdbcUrl" value="jdbc:mysql://127.0.0.1:3306/pblog?useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=Europe/Madrid" />
 
 	    <property name="poolName" value="springHikariCP" />
 	    <property name="maximumPoolSize" value="10" />
