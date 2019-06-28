@@ -64,7 +64,7 @@
 							</security:authorize>
 							<c:choose>
 								<c:when test="${page.menuOrder > 0}">
-									<a href="#" class="twitter" onclick="return twitterShare ('<c:out value="${simpleBloggerConfig.blogUrl}" /><c:url value="/app/page/${page.pageId}"/>')">&nbsp;<span class="glyphicon glyphicon-share"></span>&nbsp;<fmt:message key="blog.pages.twitter"/></a>
+									<%-- <a href="#" class="twitter" onclick="return twitterShare ('<c:out value="${simpleBloggerConfig.blogUrl}" /><c:url value="/app/page/${page.pageId}"/>')">&nbsp;<span class="glyphicon glyphicon-share"></span>&nbsp;<fmt:message key="blog.pages.twitter"/></a> --%>
 									<a href="<c:out value="${simpleBloggerConfig.blogUrl}" /><c:url value="/app/page/${page.pageId}"/>" class="permalink"  rel="bookmark" title="<spring:message text="${page.title}" javaScriptEscape="true"/>">&nbsp;<span class="glyphicon glyphicon-link"></span>&nbsp;<fmt:message key="blog.pages.permalink"/></a>
 								</c:when>
 							</c:choose>							
