@@ -12,8 +12,8 @@
 
 	<bean id="simpleBloggerConfig" class="es.isendev.blog.util.SimpleBloggerConfig" >
 		<property name="blogTitle" value="isendev.com"/>
-		<property name="blogFootMessage" value="Designed and programmed by isendev / 2019 / SimpleBlogger Engine v.0.4.6"/>
-		<property name="blogUrl" value="http://www.isendev.com"/>
+		<property name="blogFootMessage" value="Designed and programmed by isendev / 2019 / SimpleBlogger Engine v.0.4.7"/>
+		<property name="blogUrl" value="https://www.isendev.com"/>
 		<!-- <property name="blogUrl" value="http://localhost:8080"/> -->		
 		<property name="rssFeedDescription" value="isendev.com blog RSS feed"/>
 		<property name="entriesPerPage" value="4"/>
