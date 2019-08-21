@@ -165,14 +165,18 @@ a:hover {
 /* START Bootstrap carousel fix */
 
 .carousel {
-  max-width: 767px;
-  max-height: 575px;
+  /* max-width: 767px; */
+  /* max-height: 575px; */
+  max-width: 750px;
+  max-height: 562px;  
 }
 
 .carousel-inner > .item > img,
 .carousel-inner > .item > a > img {
- 	max-width: 767px;
- 	max-height: 575px;
+	/* max-width: 767px; */
+	/* max-height: 575px; */
+	max-width: 750px;
+	max-height: 562px;
 	margin: 0 auto;
 }
 
