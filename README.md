@@ -7,6 +7,5 @@ As web traffic moves massively to mobile browsing, it becomes clear that my old 
 
 Now, the new <www.isendev.com> using the revamped SimpleBlogger engine is live. I hope you like it!
 
-(c) 2016 Antonio Perdices.
 License: Public Domain.
 You can use this code freely and wisely in your applications.
