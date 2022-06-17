@@ -1,5 +1,5 @@
 <%-- 	
-	(c) 2019 Antonio Perdices.
+	(c) 2022 Antonio Perdices.
 	License: Public Domain.
 	You can use this code freely and wisely in your applications.
 --%>
@@ -17,7 +17,7 @@
     <div class="row">
         <div class="col-lg-12">
             <p class="text-center">
-	            <a href="<c:out value="${simpleBloggerConfig.myTwitterUrl}" />" class="twitter_color"><span class="glyphicon glyphicon-bullhorn"></span>&nbsp;Twitter&nbsp;&nbsp;</a>
+	            <%-- <a href="<c:out value="${simpleBloggerConfig.myTwitterUrl}" />" class="twitter_color"><span class="glyphicon glyphicon-bullhorn"></span>&nbsp;Twitter&nbsp;&nbsp;</a> --%>
 	            <a href="<c:out value="${simpleBloggerConfig.myInstagramUrl}" />" class="instagram_color"><span class="glyphicon glyphicon-camera"></span>&nbsp;Instagram&nbsp;&nbsp;</a>
 	            <a href="<c:url value="/app/feed/news.rss"/>" class="rss_color"><span class="glyphicon glyphicon-globe"></span>&nbsp;RSS Feed</a>
             </p>

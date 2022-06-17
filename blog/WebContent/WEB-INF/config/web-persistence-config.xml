@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!-- 	
-	(c) 2019 Antonio Perdices.
+	(c) 2022 Antonio Perdices.
 	License: Public Domain.
 	You can use this code freely and wisely in your applications.
 -->
@@ -82,8 +82,7 @@
 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
 
 	    <property name="driverClassName" value="org.mariadb.jdbc.Driver" />
-		<!-- <property name="jdbcUrl" value="jdbc:mariadb://192.168.100.2:3306/dblog" /> -->
-		<property name="jdbcUrl" value="jdbc:mariadb://192.168.100.2:3306/pblog" />
+		<property name="jdbcUrl" value="jdbc:mariadb://localhost:3306/dblog" />
 
 	    <property name="poolName" value="springHikariCP" />
 	    <property name="maximumPoolSize" value="10" />
@@ -91,8 +90,8 @@
 	
 	    <property name="dataSourceProperties">
 	        <props>
-	            <prop key="user">blog</prop>
-	            <prop key="password">blog</prop>
+	            <prop key="user"></prop>
+	            <prop key="password"></prop>
 	        </props>
 	    </property>
 
